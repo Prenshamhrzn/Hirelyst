@@ -1,0 +1,40 @@
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 0;
+  width: 90%;
+  margin: auto;
+}
+
+.hero-text {
+  max-width: 50%;
+  text-align: left;
+}
+
+.hero h1 {
+  font-size: 36px;
+  color: #1e2a3a;
+}
+
+.hero p {
+  font-size: 18px;
+  margin: 15px 0;
+  color: #444;
+}
+
+.cta {
+  background-color: #ff793f;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.hero img {
+  max-width: 400px;
+  height: auto;
+}

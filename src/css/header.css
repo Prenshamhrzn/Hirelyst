@@ -1,0 +1,39 @@
+/* Header */
+.header-container{
+  border-bottom: 2px solid gray;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  width: 90%;
+  margin: auto;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e2a3a;
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.nav a {
+  margin: 10 10px;
+  text-decoration: none;
+  color: #1e2a3a;
+  font-weight: 500;
+}
+
+.login-btn {
+  background-color: #ff793f;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
