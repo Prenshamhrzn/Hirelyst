@@ -2,6 +2,7 @@
 .features {
   text-align: center;
   padding: 70px 0;
+  border-top: 2px solid gray;
 }
 
 .features h2 {

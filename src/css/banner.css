@@ -6,6 +6,7 @@
   padding: 60px 0;
   width: 90%;
   margin: auto;
+  
 }
 
 .hero-text {
@@ -34,7 +35,12 @@
   cursor: pointer;
 }
 
-.hero img {
-  max-width: 400px;
+.hero-image{
+  flex: 1;
+  max-width: 50%;
+  text-align: right;
+}
+.hero-image img {
+  max-width: 100%;
   height: auto;
 }

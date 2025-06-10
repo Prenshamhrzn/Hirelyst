@@ -2,23 +2,32 @@ import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Banner from "./components/Banner";
-import Features from "./components/Features";
-import HowItWorks from "./components/HowItWorks";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
+import About from "./components/Aboutus";
+import Services from "./components/services";
+import Blog from "./components/Blog";
+import Contact from "./components/Contact";
+import Login from "./components/Login";
+
+import Home from "./components/Home";
 import GetStarted from "./components/GetStarted";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="get-started" element = {<GetStarted/>}/>
-      </Routes>
-      <Header />
-      <Banner />
-      <Features />
-      <HowItWorks />
-      <Footer />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/get-started" element={<GetStarted />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

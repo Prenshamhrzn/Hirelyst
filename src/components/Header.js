@@ -1,20 +1,26 @@
+import { LiaAdn } from "react-icons/lia";
 import "../css/header.css";
-
+import { FaHireAHelper } from "react-icons/fa";
+import { Link } from "react-router-dom";
 function Header() {
   return (
     <div className="header-container">
       <header class="header">
-        <div class="logo">Hirelyst</div>
+        <div class="logo">
+          <FaHireAHelper size={40} color="orange" /> Hirelyst
+        </div>
+        {/* <div class="logo"><div className="img_logo"><img src="hire.png"></img></div> Hirelyst</div> */}
         <nav class="nav">
-          <a href="#">Home</a>
-          <a href="#">About Us</a>
-          <a href="#">Services</a>
-          <a href="#">Blog</a>
-          <a href="#">Contact</a>
+          <Link to="/">Home</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/services">Services</Link>
+          <Link to="blog">Blog</Link>
+          <Link to="/contact">Contact</Link>
+         
         </nav>
-        <a href="#" class="login-btn">
-          Login
-        </a>
+        <Link to="/login" className="login-btn">
+          login
+        </Link>
       </header>
     </div>
   );

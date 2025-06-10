@@ -7,9 +7,13 @@ function Banner() {
         <div class="hero-text">
           <h1>Find the Right Internship & Job Match with Hirelyst</h1>
           <p>Smart recommendations tailored to your skills and goals.</p>
-          <Link to="get-started">
-           <button class="cta">Get Started</button>
+
+          <Link to="login">
+            <button class="cta">Get Started</button>
           </Link>
+        </div>
+        <div className="hero-image">
+          <img src="im.png"></img>
         </div>
       </section>
     </div>

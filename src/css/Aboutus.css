@@ -1,0 +1,50 @@
+.about-wrapper {
+  width: 90%;
+  margin:auto;
+  margin-top: 100px;
+  min-height: 100vh;
+
+}
+
+.about-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: #2c3e50;
+}
+
+.about-container{
+  display: flex;
+  align-items: start;
+  gap: 20px;
+
+}
+
+.about-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.about-text-section{
+  width: 60%;
+}
+.about-image {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+
+.about-text {
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: left;
+}
