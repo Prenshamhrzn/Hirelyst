@@ -16,9 +16,8 @@ function Header() {
           <Link to="/services">Services</Link>
           <Link to="blog">Blog</Link>
           <Link to="/contact">Contact</Link>
-         
         </nav>
-        <Link to="/login" className="login-btn">
+        <Link to="/loginPage" className="login-btn">
           login
         </Link>
       </header>
