@@ -12,6 +12,7 @@ function Banner() {
             <p>Smart recommendations tailored to your skills and goals.</p>
             <br></br>
 
+<<<<<<< HEAD
             <div className="cta-section">
               <Link to="loginPage" className="cta-link">
                 <button className="cta-button primary">
@@ -50,6 +51,14 @@ function Banner() {
             />
             <div className="image-decoration"></div>
           </div>
+=======
+          <Link to="loginPage">
+            <button class="cta">Get Started</button>
+          </Link>
+        </div>
+        <div className="hero-image">
+          <img src="im.png"></img>
+>>>>>>> c34cc76 (updated code)
         </div>
       </section>
     </div>

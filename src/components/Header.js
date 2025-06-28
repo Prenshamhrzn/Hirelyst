@@ -18,7 +18,11 @@ function Header() {
           <Link to="/contact">Contact</Link>
         </nav>
         <Link to="/loginPage" className="login-btn">
+<<<<<<< HEAD
           Login
+=======
+          login
+>>>>>>> c34cc76 (updated code)
         </Link>
       </header>
     </div>

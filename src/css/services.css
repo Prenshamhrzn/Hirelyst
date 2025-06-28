@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Services Section - Enhanced */
 .services {
   text-align: center;
@@ -6,6 +7,17 @@
   position: relative;
   overflow: hidden;
 }
+=======
+.login-container{
+  min-height: 100vh;
+  background-color: white;
+}
+
+.services{
+    text-align: center;
+    padding: 90px 0;
+    border-top: 2px solid gray;
+>>>>>>> c34cc76 (updated code)
 
 .services::before {
   content: "";
