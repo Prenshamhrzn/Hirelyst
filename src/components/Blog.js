@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "../css/blog.css";
-import aboutImage from "./abouut.png";
 
 function Blog() {
   const [expandedPost, setExpandedPost] = useState(null);
@@ -11,63 +10,121 @@ function Blog() {
 
   const blogPosts = [
     {
-      image: aboutImage,
-      other: "dfkdsfkljflkdf",
       title: "5 Tips to Get Your First Internship",
       date: "June 1, 2025",
       preview:
-        "Starting your career journey can feel challenging. This post walks you through building your resume...",
-      full: "Starting your career journey can feel challenging. This post walks you through building your resume, preparing for interviews, finding the right internships on platforms like Hirelyst, and how to stand out among other applicants. Whether you’re in college or just graduated, these tips will help you land that first opportunity.",
+        "Starting your career journey can feel overwhelming. This post guides you through building your resume...",
+      full: (
+        <>
+          <p>
+            Starting your career journey can feel overwhelming. This post guides
+            you through five essential steps:
+          </p>
+          <ul>
+            <li>Build a clear and concise resume.</li>
+            <li>
+              Leverage platforms like Hirelyst to discover internship
+              opportunities tailored to your skills.
+            </li>
+            <li>Prepare for behavioral and technical interviews.</li>
+            <li>Network with peers and mentors.</li>
+            <li>Stay consistent and never stop learning.</li>
+          </ul>
+          <p>
+            Whether you're a college student or a recent graduate, these tips
+            can increase your chances of securing your first role.
+          </p>
+        </>
+      ),
     },
     {
-      image: aboutImage,
       title: "Why Personalized Job Recommendations Matter",
       date: "May 25, 2025",
       preview:
         "Hirelyst helps you discover internships and jobs that suit your profile...",
-      full: "Hirelyst helps you discover internships and jobs that suit your profile, based on your interests, skills, and previous activity. Instead of endlessly searching, Hirelyst recommends roles you're most likely to succeed in.",
+      full: (
+        <>
+          <p>
+            Hirelyst helps you discover internships and jobs that suit your
+            profile, thanks to its personalized recommendation engine. Instead
+            of wasting time scrolling endlessly, you’re matched with
+            opportunities based on:
+          </p>
+          <ul>
+            <li>Your skillset</li>
+            <li>Your interests</li>
+            <li>Your educational background</li>
+            <li>Previous search behavior</li>
+          </ul>
+          <p>
+            This means fewer irrelevant listings and more time applying to roles
+            that truly fit you.
+          </p>
+        </>
+      ),
     },
-
     {
-      image: aboutImage,
       title: "Top 10 Skills Employers Look for in Freshers",
       date: "May 15, 2025",
       preview:
         "Want to stand out in job applications? This blog highlights the top skills freshers need...",
-      full: "Want to stand out in job applications? This blog highlights the top skills freshers need—from communication, adaptability, teamwork, and problem-solving to technical skills like Excel, Python, or digital marketing. Learn how to acquire and showcase these skills on platforms like Hirelyst to increase your chances of success.",
+      full: (
+        <>
+          <p>
+            To land a job or internship as a fresher, you need more than just a
+            degree. This post highlights the top 10 skills employers are looking
+            for:
+          </p>
+          <ul>
+            <li>Communication (verbal & written)</li>
+            <li>Adaptability</li>
+            <li>Team collaboration</li>
+            <li>Critical thinking</li>
+            <li>Time management</li>
+            <li>Leadership potential</li>
+            <li>Digital literacy (Google Workspace, Excel)</li>
+            <li>Technical skills (e.g., Python, SQL)</li>
+            <li>Creativity and innovation</li>
+            <li>Basic project management</li>
+          </ul>
+          <p>
+            We also explain how you can develop and showcase these skills on
+            platforms like Hirelyst to strengthen your profile.
+          </p>
+        </>
+      ),
     },
   ];
 
   return (
-    <div>
-      <section className="blog-section">
-        <div className="blog-header">
-          <h1>Blog</h1>
-          <p>
-            Explore helpful career tips, internship advice, and job-seeking
-            strategies curated for you.
-          </p>
-        </div>
+    <section className="blog">
+      <div className="blog-header">
+        <h1>Blog</h1>
+        <p>
+          Explore career insights, application tips, and platform
+          features—designed for students and fresh graduates.
+        </p>
+      </div>
 
-        <div className="blog-posts">
-          {blogPosts.map((post, index) => (
-            <div className="blog-post" key={index}>
-              <img src={post.image} />
-              <h2>{post.title}</h2>
-
-              <p className="date">{post.date}</p>
-              <p>{expandedPost === index ? post.full : post.preview}</p>
-              <button
-                className="read-more-btn"
-                onClick={() => toggleExpand(index)}
-              >
-                {expandedPost === index ? "Show Less" : "Read More"}
-              </button>
+      <div className="blog-grid">
+        {blogPosts.map((post, index) => (
+          <div className="blog-post" key={index}>
+            <h2>{post.title}</h2>
+            <p className="date">{post.date}</p>
+            <div className="blog-content">
+              {expandedPost === index ? post.full : <p>{post.preview}</p>}
             </div>
-          ))}
-        </div>
-      </section>
-    </div>
+            <button
+              className="read-more-btn"
+              onClick={() => toggleExpand(index)}
+            >
+              {expandedPost === index ? "Show Less" : "Read More"}
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
+
 export default Blog;

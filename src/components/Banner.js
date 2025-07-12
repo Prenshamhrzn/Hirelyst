@@ -1,22 +1,59 @@
 import { Link } from "react-router-dom";
 import "../css/banner.css";
+import { FaSearch, FaArrowRight } from "react-icons/fa";
+
 function Banner() {
   return (
-    <div>
-      <section class="hero">
-        <div class="hero-text">
-          <h1>Find the Right Internship & Job Match with Hirelyst</h1>
-          <p>Smart recommendations tailored to your skills and goals.</p>
+    <div className="banner-container">
+      <section className="hero">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1>Find the Right Internship & Job Match with Hirelyst</h1>
+            <p>Smart recommendations tailored to your skills and goals.</p>
+            <br></br>
 
-          <Link to="loginPage">
-            <button class="cta">Get Started</button>
-          </Link>
-        </div>
-        <div className="hero-image">
-          <img src="im.png"></img>
+            <div className="cta-section">
+              <Link to="loginPage" className="cta-link">
+                <button className="cta-button primary">
+                  Get Started <FaArrowRight className="cta-icon" />
+                </button>
+              </Link>
+
+              <Link to="search" className="cta-link">
+                <button className="cta-button secondary">
+                  <FaSearch className="cta-icon" /> Browse Jobs
+                </button>
+              </Link>
+            </div>
+
+            <div className="stats-container">
+              <div className="stat-item">
+                <span className="stat-number">500+</span>
+                <span className="stat-label">Companies</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">10,000+</span>
+                <span className="stat-label">Opportunities</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">95%</span>
+                <span className="stat-label">Match Accuracy</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-image">
+            <img
+              src="im.png"
+              alt="Young professionals finding jobs"
+              className="floating-image"
+            />
+            <div className="image-decoration"></div>
+          </div>
         </div>
       </section>
     </div>
   );
 }
+
 export default Banner;

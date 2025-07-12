@@ -18,7 +18,7 @@ function Header() {
           <Link to="/contact">Contact</Link>
         </nav>
         <Link to="/loginPage" className="login-btn">
-          login
+          Login
         </Link>
       </header>
     </div>
