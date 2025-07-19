@@ -1,6 +1,6 @@
 /* Header */
 .header-container{
-  border-bottom: 2px solid gray;
+  border-bottom: 2px #003366 ;
 }
 .header {
   display: flex;
@@ -14,7 +14,7 @@
 .logo {
   font-size: 30px;
   font-weight: 700;
-  color: #1e2a3a;
+  color: #003366 ;
 }
 .img_logo{
   flex: 1;

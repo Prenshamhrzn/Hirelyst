@@ -11,10 +11,12 @@ import Contact from "./components/Contact";
 import LoginPage from "./components/LoginPage";
 import Home from "./components/Home";
 import GetStarted from "./components/GetStarted";
+import BrowseJobs from "./components/BrowseJobs";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -26,6 +28,8 @@ function App() {
           {/*<Route path="/login" element={<Login />} />*/}
           <Route path="/loginPage" element={<LoginPage />} />
           <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/browse-jobs" element={<BrowseJobs />} />
+          <Route path="/search-bar" element={<SearchBar />} />
         </Routes>
         <Footer />
       </BrowserRouter>

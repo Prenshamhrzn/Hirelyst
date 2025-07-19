@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import "../css/banner.css";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
+import SearchBar from "./SearchBar";
 
 function Banner() {
   return (
@@ -8,9 +9,19 @@ function Banner() {
       <section className="hero">
         <div className="hero-content">
           <div className="hero-text">
-            <h1>Find the Right Internship & Job Match with Hirelyst</h1>
-            <p>Smart recommendations tailored to your skills and goals.</p>
-            <br></br>
+            {/* ✅ Elevated SearchBar */}
+            <div className="elevated-search">
+              <SearchBar
+                onSearch={(query) => console.log("Search query:", query)}
+              />
+            </div>
+
+            <div>
+              <h1>Find the Right Internship & Job Match with Hirelyst</h1>
+              <p>Smart recommendations tailored to your skills and goals.</p>
+            </div>
+
+            <br />
 
             <div className="cta-section">
               <Link to="loginPage" className="cta-link">
