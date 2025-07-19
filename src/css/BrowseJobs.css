@@ -1,0 +1,88 @@
+.browse-section {
+  padding: 60px 20px;
+  background: #f9fafc;
+  text-align: center;
+}
+
+.browse-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #2d2d2d;
+}
+
+.browse-jobs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.browse-job-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.browse-job-card:hover {
+  transform: translateY(-5px);
+}
+
+.browse-job-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  color: #1d3557;
+}
+
+.company-name {
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.location {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Reusing job type badge */
+.job-type {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.job-type.remote {
+  background-color: #28a745;
+}
+
+.job-type.on-site {
+  background-color: #dc3545;
+}
+
+.job-type.hybrid {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.apply-btn {
+  margin-top: 10px;
+  background-color: #2d78f4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+  background-color: #155ec4;
+}

@@ -1,6 +1,23 @@
 import { useState } from "react";
 import "../css/blog.css";
 
+const BlogPost = ({ post, index, isExpanded, onToggle }) => (
+  <div className="blog-post">
+    <h2>{post.title}</h2>
+    <p className="date">{post.date}</p>
+    <div className="blog-content">
+      {isExpanded ? post.full : <p>{post.preview}</p>}
+    </div>
+    <button
+      className="read-more-btn"
+      onClick={onToggle}
+      aria-expanded={isExpanded}
+    >
+      {isExpanded ? "Show Less" : "Read More"}
+    </button>
+  </div>
+);
+
 function Blog() {
   const [expandedPost, setExpandedPost] = useState(null);
 
@@ -108,19 +125,13 @@ function Blog() {
 
       <div className="blog-grid">
         {blogPosts.map((post, index) => (
-          <div className="blog-post" key={index}>
-            <h2>{post.title}</h2>
-            <p className="date">{post.date}</p>
-            <div className="blog-content">
-              {expandedPost === index ? post.full : <p>{post.preview}</p>}
-            </div>
-            <button
-              className="read-more-btn"
-              onClick={() => toggleExpand(index)}
-            >
-              {expandedPost === index ? "Show Less" : "Read More"}
-            </button>
-          </div>
+          <BlogPost
+            key={index}
+            post={post}
+            index={index}
+            isExpanded={expandedPost === index}
+            onToggle={() => toggleExpand(index)}
+          />
         ))}
       </div>
     </section>

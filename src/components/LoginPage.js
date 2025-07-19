@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../css/LoginPage.css";
 
-function LoginPage() {
+const LoginPage = () => {
   const [userType, setUserType] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -9,6 +9,7 @@ function LoginPage() {
     setUserType(type);
   };
 
+<<<<<<< HEAD
 const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true);
@@ -39,6 +40,18 @@ const handleSubmit = async (e) => {
   }
 };
 
+=======
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      alert(`${userType} form submitted successfully!`);
+    }, 1500);
+  };
+>>>>>>> upstream/main
 
   return (
     <div className="login-container">
@@ -51,16 +64,16 @@ const handleSubmit = async (e) => {
         <div className="selection">
           <h2>I want to login as:</h2>
           <div className="selection-cards">
-            <div 
-              className="selection-card" 
+            <div
+              className="selection-card"
               onClick={() => handleSelect("User")}
             >
               <div className="card-icon">👨‍💼</div>
               <h3>Job Seeker</h3>
               <p>Looking for your next opportunity</p>
             </div>
-            <div 
-              className="selection-card" 
+            <div
+              className="selection-card"
               onClick={() => handleSelect("Job Provider")}
             >
               <div className="card-icon">🏢</div>
@@ -78,21 +91,21 @@ const handleSubmit = async (e) => {
 
           <div className="input-group">
             <label>Email</label>
-            <input 
-              type="email" 
-              name="email" 
-              placeholder="your@email.com" 
-              required 
+            <input
+              type="email"
+              name="email"
+              placeholder="your@email.com"
+              required
             />
           </div>
 
           <div className="input-group">
             <label>Password</label>
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="••••••••" 
-              required 
+            <input
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              required
             />
           </div>
 
@@ -123,39 +136,39 @@ const handleSubmit = async (e) => {
             <>
               <div className="input-group">
                 <label>Company Name</label>
-                <input 
-                  type="text" 
-                  name="company" 
-                  placeholder="Your Company Inc." 
-                  required 
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Your Company Inc."
+                  required
                 />
               </div>
 
               <div className="input-group">
                 <label>Job Role</label>
-                <input 
-                  type="text" 
-                  name="jobrole" 
-                  placeholder="Position you're hiring for" 
-                  required 
+                <input
+                  type="text"
+                  name="jobrole"
+                  placeholder="Position you're hiring for"
+                  required
                 />
               </div>
 
               <div className="input-group">
                 <label>Contact Number</label>
-                <input 
-                  type="tel" 
-                  name="contact" 
-                  placeholder="+1 (123) 456-7890" 
-                  required 
+                <input
+                  type="tel"
+                  name="contact"
+                  placeholder="+1 (123) 456-7890"
+                  required
                 />
               </div>
             </>
           )}
 
           <div className="form-actions">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={isLoading}
             >
@@ -179,6 +192,6 @@ const handleSubmit = async (e) => {
       )}
     </div>
   );
-}
+};
 
 export default LoginPage;

@@ -1,4 +1,4 @@
-import "../css/featues.css";
+import "../css/feature.css";
 import { FcBusinessman } from "react-icons/fc";
 import { IoNotificationsCircle } from "react-icons/io5";
 import { HiOutlineSaveAs } from "react-icons/hi";
