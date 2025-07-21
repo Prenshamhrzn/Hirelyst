@@ -30,7 +30,7 @@ function Banner() {
                 </button>
               </Link>
 
-              <Link to="search" className="cta-link">
+              <Link to="/browse-jobs" className="cta-link">
                 <button className="cta-button secondary">
                   <FaSearch className="cta-icon" /> Browse Jobs
                 </button>

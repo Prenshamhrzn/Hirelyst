@@ -1,6 +1,6 @@
 .featured-section {
   padding: 60px 20px;
-  background: #f5f9ff;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
   text-align: center;
 }
 
@@ -11,12 +11,23 @@
 }
 
 .job-card {
-  padding: 15px;
+  width: 350px; /* Previously something like 300px */
+  height: auto; /* Or set to a fixed value like 280px if needed */
+  padding: 30px 20px; /* Slightly increase for more space inside */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
 }
+.job-card {
+  padding-bottom: 40px; /* Increase bottom padding */
+  /* Optional: also increase top/side padding for balance */
+  padding: 30px 20px 40px 20px;
+}
+
 
 .job-card-content {
   background: linear-gradient(135deg, #ffffff, #e6f0ff);
-  border: 2px solid #2d78f4;
+  border: #0077b6;
   border-radius: 20px;
   padding: 25px 20px;
   height: 230px;
@@ -25,6 +36,32 @@
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-card-content {
+  background: linear-gradient(135deg, #ffffff, #e6f0ff);
+  border: 2px solid #0077b6;
+  border-radius: 20px;
+  padding: 25px 20px 30px 20px; /* Added more bottom padding */
+  height: 270px; /* Increased height */
+  box-shadow: 0 4px 12px rgba(45, 120, 244, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px; /* Add spacing between items */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apply-btn {
+  background-color: #0077b6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* Remove margin-bottom, handled by padding in parent */
 }
 
 .job-card-content:hover {
@@ -39,7 +76,7 @@
 }
 
 .company-name {
-  color: #2d78f4;
+  color: #0077b6;
   font-weight: 600;
 }
 
@@ -47,21 +84,11 @@
   color: #666;
   font-size: 0.95rem;
   margin-bottom: 1rem;
-}
-
-.apply-btn {
-  background-color: #2d78f4;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  
 }
 
 .apply-btn:hover {
-  background-color: #1c5dc9;
+  background-color: #0077b6;
 }
 .job-type {
   display: inline-block;

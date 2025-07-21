@@ -255,3 +255,16 @@
   border-color: #004bcc;
   box-shadow: 0 0 8px rgba(0, 75, 204, 0.3);
 }
+/* Animated Illustration Styles */
+.animated-illustration {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  z-index: 3;
+}
+
+/* Enhanced Hero Image Container */
+.hero-image {
+  perspective: 1000px;
+}
+
