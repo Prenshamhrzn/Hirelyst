@@ -76,15 +76,15 @@
 
 /* Dynamic color based on job type */
 .job-type.remote {
-  background-color: #28a745; /* Green */
+  background-color:  #b9b9e1  /*#bbbb2f;*/
 }
 
 .job-type.on-site {
-  background-color: #dc3545; /* Red */
+  background-color: #b9b9e1;
 }
 
 .job-type.hybrid {
-  background-color: #ffc107; /* Yellow */
+  background-color: #b9b9e1;
   color: #333;
 }
 

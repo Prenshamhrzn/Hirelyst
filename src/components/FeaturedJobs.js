@@ -68,7 +68,7 @@ const FeaturedJobs = ({ jobs }) => {
 
   return (
     <section className="featured-section">
-      <h2 className="featured-title">🔥 Featured Jobs</h2>
+      <h2 className="featured-title"> Featured Jobs</h2>
       <Slider {...settings}>
         {jobList.map((job) => (
           <div key={job.id} className="job-card">
