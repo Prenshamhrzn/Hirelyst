@@ -9,38 +9,6 @@ const LoginPage = () => {
     setUserType(type);
   };
 
-<<<<<<< HEAD
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
-
-  const form = new FormData(e.target);
-  const formData = Object.fromEntries(form.entries());
-
-  try {
-    const endpoint = userType === "User" ? "users" : "employers";
-
-    const res = await fetch(`http://localhost:5000/api/${endpoint}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    const result = await res.json();
-    if (res.ok) {
-      alert(`✅ ${userType} registered: ${result.name || result.email}`);
-    } else {
-      alert(`❌ Error: ${result.message || "Registration failed"}`);
-    }
-  } catch (error) {
-    console.error("❌ API error:", error);
-    alert("❌ Backend connection error");
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-=======
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -51,7 +19,6 @@ const handleSubmit = async (e) => {
       alert(`${userType} form submitted successfully!`);
     }, 1500);
   };
->>>>>>> upstream/main
 
   return (
     <div className="login-container">
