@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../css/LoginPage.css";
 
-const LoginPage = () => {
+function LoginPage() {
   const [userType, setUserType] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -9,15 +9,34 @@ const LoginPage = () => {
     setUserType(type);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    const form = new FormData(e.target);
+    const formData = Object.fromEntries(form.entries());
+
+    try {
+      const endpoint = userType === "User" ? "users" : "employers";
+
+      const res = await fetch(`http://localhost:5000/api/${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        alert(`✅ ${userType} registered: ${result.email}`);
+      } else {
+        alert(`❌ Error: ${result.message || "Registration failed"}`);
+      }
+    } catch (error) {
+      console.error("❌ API error:", error);
+      alert("❌ Backend connection error");
+    } finally {
       setIsLoading(false);
-      alert(`${userType} form submitted successfully!`);
-    }, 1500);
+    }
   };
 
   return (
@@ -31,18 +50,12 @@ const LoginPage = () => {
         <div className="selection">
           <h2>I want to login as:</h2>
           <div className="selection-cards">
-            <div
-              className="selection-card"
-              onClick={() => handleSelect("User")}
-            >
+            <div className="selection-card" onClick={() => handleSelect("User")}>
               <div className="card-icon">👨‍💼</div>
               <h3>Job Seeker</h3>
               <p>Looking for your next opportunity</p>
             </div>
-            <div
-              className="selection-card"
-              onClick={() => handleSelect("Job Provider")}
-            >
+            <div className="selection-card" onClick={() => handleSelect("Job Provider")}>
               <div className="card-icon">🏢</div>
               <h3>Employer</h3>
               <p>Hiring top talent for your company</p>
@@ -58,43 +71,23 @@ const LoginPage = () => {
 
           <div className="input-group">
             <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              required
-            />
+            <input type="email" name="email" placeholder="your@email.com" required />
           </div>
 
           <div className="input-group">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
+            <input type="password" name="password" placeholder="••••••••" required />
           </div>
 
           {userType === "User" && (
             <>
               <div className="input-group">
                 <label>Resume (Link)</label>
-                <input
-                  type="url"
-                  name="resume"
-                  placeholder="https://linkedin.com/in/yourprofile"
-                  required
-                />
+                <input type="url" name="resume" placeholder="https://linkedin.com/in/yourprofile" required />
               </div>
-
               <div className="input-group">
                 <label>Skills</label>
-                <input
-                  type="text"
-                  name="skills"
-                  placeholder="e.g., React, Node.js, Python"
-                />
+                <input type="text" name="skills" placeholder="e.g., React, Node.js, Python" />
               </div>
             </>
           )}
@@ -103,55 +96,24 @@ const LoginPage = () => {
             <>
               <div className="input-group">
                 <label>Company Name</label>
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="Your Company Inc."
-                  required
-                />
+                <input type="text" name="companyName" placeholder="Your Company Inc." required />
               </div>
-
               <div className="input-group">
                 <label>Job Role</label>
-                <input
-                  type="text"
-                  name="jobrole"
-                  placeholder="Position you're hiring for"
-                  required
-                />
+                <input type="text" name="jobrole" placeholder="Position you're hiring for" required />
               </div>
-
               <div className="input-group">
                 <label>Contact Number</label>
-                <input
-                  type="tel"
-                  name="contact"
-                  placeholder="+1 (123) 456-7890"
-                  required
-                />
+                <input type="tel" name="contact" placeholder="+1 (123) 456-7890" required />
               </div>
             </>
           )}
 
           <div className="form-actions">
-            <button
-              type="submit"
-              className="submit-button"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <span className="spinner"></span> Processing...
-                </>
-              ) : (
-                "Continue"
-              )}
+            <button type="submit" className="submit-button" disabled={isLoading}>
+              {isLoading ? <><span className="spinner"></span> Processing...</> : "Continue"}
             </button>
-            <button
-              type="button"
-              className="back-button"
-              onClick={() => setUserType(null)}
-            >
+            <button type="button" className="back-button" onClick={() => setUserType(null)}>
               ← Go Back
             </button>
           </div>
@@ -159,6 +121,6 @@ const LoginPage = () => {
       )}
     </div>
   );
-};
+}
 
 export default LoginPage;
