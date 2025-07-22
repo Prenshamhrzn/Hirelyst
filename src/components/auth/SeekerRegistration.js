@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Added import
 import {
   FaArrowLeft,
   FaUpload,
@@ -7,7 +8,9 @@ import {
 } from "react-icons/fa";
 import "../../css/Auth.css";
 
-const SeekerRegistration = ({ onComplete, onBack }) => {
+const SeekerRegistration = ({ onBack }) => {
+  const navigate = useNavigate(); // Initialized navigate
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -35,7 +38,7 @@ const SeekerRegistration = ({ onComplete, onBack }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Registration data:", formData);
-    onComplete();
+    navigate("/seeker-dashboard", { state: { formData } }); // Using navigate
   };
 
   return (
