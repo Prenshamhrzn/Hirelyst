@@ -8,11 +8,16 @@ import Services from "./components/services";
 import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 //import Login from "./components/Login";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/auth/LoginPage";
 import Home from "./components/Home";
 import GetStarted from "./components/GetStarted";
 import BrowseJobs from "./components/BrowseJobs";
 import SearchBar from "./components/SearchBar";
+import SeekerRegistration from "./components/auth/SeekerRegistration";
+import ProviderRegistration from "./components/auth/ProviderRegistration";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import SeekerDashboard from "./components/auth/SeekerDashboard";
+import EmployerDashboard from "./components/auth/EmployerDashboard";
 
 function App() {
   return (
@@ -30,6 +35,10 @@ function App() {
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/browse-jobs" element={<BrowseJobs />} />
           <Route path="/search-bar" element={<SearchBar />} />
+          <Route path="/seeker-dashboard" element={<SeekerDashboard />} />
+
+          <Route path="/provider-register" element={<ProviderRegistration />} />
+           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
         </Routes>
         <Footer />
       </BrowserRouter>
