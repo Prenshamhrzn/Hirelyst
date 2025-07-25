@@ -1,0 +1,301 @@
+/* --- Container and Card --- */
+.dashboard-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  max-width: 900px;
+  width: 100%;
+  padding: 2.5rem 3rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* --- Headings --- */
+.dashboard-card h2 {
+  font-size: 2.2rem;
+  color: #3f37c9;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.dashboard-card h3 {
+  font-size: 1.5rem;
+  color: #4361ee;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e3e8ff;
+  padding-bottom: 0.3rem;
+}
+
+/* --- Company Info Section --- */
+.info-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-section ul li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.info-section ul li strong {
+  color: #3f37c9;
+}
+
+/* --- Loading Text --- */
+.loading {
+  font-style: italic;
+  color: #888;
+  font-size: 1.1rem;
+}
+
+/* --- Vacancies Section --- */
+.vacancies-section {
+  border-top: 1px solid #e3e8ff;
+  padding-top: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-vacancy-btn {
+  background: #4361ee;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 1rem;
+}
+
+.add-vacancy-btn:hover {
+  background: #3f37c9;
+}
+
+/* --- Vacancy Form --- */
+.vacancy-form {
+  margin-top: 1.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: inset 0 0 8px rgba(67, 97, 238, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.vacancy-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.vacancy-form label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #3f37c9;
+}
+
+.vacancy-form input[type="text"],
+.vacancy-form textarea,
+.vacancy-form select {
+  padding: 0.6rem 1rem;
+  border: 2px solid #dfe4ff;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.vacancy-form input[type="text"]:focus,
+.vacancy-form textarea:focus,
+.vacancy-form select:focus {
+  border-color: #4361ee;
+  outline: none;
+  box-shadow: 0 0 8px rgba(67, 97, 238, 0.3);
+}
+
+.vacancy-form textarea {
+  min-height: 80px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* Submit button */
+.submit-btn {
+  align-self: center;
+  background: linear-gradient(90deg, #4361ee, #3f37c9);
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.submit-btn:hover {
+  box-shadow: 0 6px 20px rgba(67, 97, 238, 0.5);
+}
+
+/* --- Vacancy List --- */
+.vacancies-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.vacancy-card {
+  border: 1px solid #dfe4ff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: #f8f9fa;
+  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vacancy-card h3 {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: #3f37c9;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+}
+
+.status-badge.pending {
+  background-color: #f8961e;
+}
+
+.status-badge.approved {
+  background-color: #4cc9f0;
+}
+
+.status-badge.rejected {
+  background-color: #f72585;
+}
+
+/* Vacancy details */
+.vacancy-card p {
+  margin: 0.2rem 0;
+  font-size: 1rem;
+}
+
+/* Vacancy buttons */
+.vacancy-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.vacancy-actions button {
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn {
+  background-color: #4361ee;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #3f37c9;
+}
+
+.edit-btn {
+  background-color: #f8961e;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #e07a0f;
+}
+
+/* --- Logout Button --- */
+.logout-button {
+  margin-top: 2rem;
+  align-self: center;
+  padding: 0.75rem 2.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+  background: #f72585;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #c31f6e;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .vacancy-actions {
+    flex-direction: column;
+  }
+
+  .vacancy-actions button {
+    width: 100%;
+  }
+
+  .dashboard-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-wrapper {
+    padding: 2rem 0.5rem;
+  }
+}

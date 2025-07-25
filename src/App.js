@@ -16,8 +16,8 @@ import SearchBar from "./components/SearchBar";
 import SeekerRegistration from "./components/auth/SeekerRegistration";
 import ProviderRegistration from "./components/auth/ProviderRegistration";
 import AdminDashboard from "./components/admin/AdminDashboard";
-import SeekerDashboard from "./components/auth/SeekerDashboard";
 import EmployerDashboard from "./components/auth/EmployerDashboard";
+import SeekerDashboard from "./components/auth/SeekerDashboard";
 
 function App() {
   return (
@@ -36,9 +36,8 @@ function App() {
           <Route path="/browse-jobs" element={<BrowseJobs />} />
           <Route path="/search-bar" element={<SearchBar />} />
           <Route path="/seeker-dashboard" element={<SeekerDashboard />} />
-
-          <Route path="/provider-register" element={<ProviderRegistration />} />
-           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+          <Route path="/provider-registration" element={<ProviderRegistration />} />
+          <Route path="/employer-dashboard" element={<EmployerDashboard />} />
         </Routes>
         <Footer />
       </BrowserRouter>

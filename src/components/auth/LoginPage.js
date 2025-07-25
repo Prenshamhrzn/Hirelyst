@@ -121,8 +121,8 @@ const LoginPage = () => {
             onBack={() => setIsRegistering(false)}
           />
         ) : (
-          <ProviderRegistration
-            onComplete={() => navigate("/provider-dashboard")}
+         <ProviderRegistration
+            onComplete={() => navigate("/employer-dashboard")}
             onBack={() => setIsRegistering(false)}
           />
         )}
@@ -130,5 +130,4 @@ const LoginPage = () => {
     </div>
   );
 };
-
 export default LoginPage;
