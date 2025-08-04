@@ -18,6 +18,7 @@ import ProviderRegistration from "./components/auth/ProviderRegistration";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import EmployerDashboard from "./components/auth/EmployerDashboard";
 import SeekerDashboard from "./components/auth/SeekerDashboard";
+import RegisterPage from "./components/auth/RegistserPage";
 
 function App() {
   return (
@@ -32,11 +33,12 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           {/*<Route path="/login" element={<Login />} />*/}
           <Route path="/loginPage" element={<LoginPage />} />
+          <Route path="/registerPage" element={<RegisterPage />} />
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/browse-jobs" element={<BrowseJobs />} />
           <Route path="/search-bar" element={<SearchBar />} />
           <Route path="/seeker-dashboard" element={<SeekerDashboard />} />
-          <Route path="/provider-registration" element={<ProviderRegistration />} />
+          <Route path="/register/provider-registration" element={<ProviderRegistration />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
         </Routes>
         <Footer />

@@ -21,6 +21,9 @@ function Header() {
         <Link to="/loginPage" className="login-btn">
           Login
         </Link>
+        <Link to="/registerPage" className="login-btn">
+          Register
+        </Link>
       </header>
     </div>
   );

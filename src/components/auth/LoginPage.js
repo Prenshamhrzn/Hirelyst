@@ -1,41 +1,68 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Typography,
+  Alert,
+} from "antd";
 import { FaUser, FaLock, FaBriefcase, FaUserShield } from "react-icons/fa";
+import axios from "axios";
 import "../../css/Auth.css";
 import SeekerRegistration from "./SeekerRegistration";
 import ProviderRegistration from "./ProviderRegistration";
 
+const { Option } = Select;
+const { Title, Paragraph } = Typography;
+
 const LoginPage = () => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-    userType: "seeker",
-  });
+  const [userType, setUserType] = useState("seeker");
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prev) => ({ ...prev, [name]: value }));
+  const handleUserTypeChange = (value) => {
+    setUserType(value);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (!credentials.username || !credentials.password) {
+  const handleLogin = async (values) => {
+    const { email, password } = values;
+    setError("");
+
+    if (!email || !password) {
       setError("Please fill all fields");
       return;
     }
 
-    // Simulate API call
     try {
-      if (credentials.userType === "admin") {
+      if (userType === "provider") {
+        const response = await axios.post(
+          "http://localhost:5000/api/employers/loginEmployer",
+          { email, password }
+        );
+
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          navigate("/employer-dashboard");
+        } else {
+          throw new Error("Login failed");
+        }
+
+      } else if (userType === "admin") {
+
         navigate("/admin-dashboard");
-      } else {
+
+      } else if (userType === "seeker") {
         setIsRegistering(true);
+      } else {
+        setError("Unsupported user type");
       }
+
     } catch (err) {
-      setError("Invalid credentials");
+      const message = err.response?.data?.message || err.message || "Login failed";
+      setError(message);
     }
   };
 
@@ -45,83 +72,82 @@ const LoginPage = () => {
         {!isRegistering ? (
           <>
             <div className="auth-header">
-              <h2>
+              <Title level={2}>
                 Welcome to <span className="brand-gradient">Hirelyst</span>
-              </h2>
-              <p>Find your dream job or ideal candidate</p>
+              </Title>
+              <Paragraph>Find your dream job or ideal candidate</Paragraph>
             </div>
 
-            <form onSubmit={handleLogin} className="auth-form">
-              <div className="input-group">
-                <div className="input-icon">
-                  {credentials.userType === "seeker" ? (
-                    <FaUser />
-                  ) : credentials.userType === "provider" ? (
-                    <FaBriefcase />
-                  ) : (
-                    <FaUserShield />
-                  )}
-                </div>
-                <select
-                  name="userType"
-                  value={credentials.userType}
-                  onChange={handleChange}
-                  className="auth-select"
+            <Form
+              layout="vertical"
+              onFinish={handleLogin}
+              className="auth-form"
+            >
+              <Form.Item
+                label="User Type"
+                name="userType"
+                initialValue="seeker"
+              >
+                <Select onChange={handleUserTypeChange}>
+                  <Option value="seeker">
+                    <FaUser /> Job Seeker
+                  </Option>
+                  <Option value="provider">
+                    <FaBriefcase /> Employer
+                  </Option>
+                  <Option value="admin">
+                    <FaUserShield /> Admin
+                  </Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true, message: "Please input your email!" }]}
+              >
+                <Input prefix={<FaUser />} placeholder="Email" />
+              </Form.Item>
+
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: "Please input your password!" }]}
+              >
+                <Input.Password prefix={<FaLock />} placeholder="Password" />
+              </Form.Item>
+
+              {error && (
+                <Form.Item>
+                  <Alert type="error" message={error} showIcon />
+                </Form.Item>
+              )}
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  className="auth-button"
                 >
-                  <option value="seeker">Job Seeker</option>
-                  <option value="provider">Employer</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
-
-              <div className="input-group">
-                <div className="input-icon">
-                  <FaUser />
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Username or Email"
-                  value={credentials.username}
-                  onChange={handleChange}
-                  className="auth-input"
-                />
-              </div>
-
-              <div className="input-group">
-                <div className="input-icon">
-                  <FaLock />
-                </div>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={credentials.password}
-                  onChange={handleChange}
-                  className="auth-input"
-                />
-              </div>
-
-              {error && <div className="auth-error">{error}</div>}
-
-              <button type="submit" className="auth-button primary">
-                {credentials.userType === "admin" ? "Login" : "Continue"}
-              </button>
+                  {userType === "admin" ? "Login" : "Continue"}
+                </Button>
+              </Form.Item>
 
               <div className="auth-footer">
-                <p>
-                  New to Hirelyst? <span className="text-link">Learn more</span>
-                </p>
+                <Paragraph>
+                  New to Hirelyst? <Link to="/registerPage">Register here</Link>
+                </Paragraph>
               </div>
-            </form>
+            </Form>
           </>
-        ) : credentials.userType === "seeker" ? (
+        ) : userType === "seeker" ? (
           <SeekerRegistration
             onComplete={() => navigate("/seeker-dashboard")}
             onBack={() => setIsRegistering(false)}
           />
         ) : (
-         <ProviderRegistration
+          <ProviderRegistration
             onComplete={() => navigate("/employer-dashboard")}
             onBack={() => setIsRegistering(false)}
           />
@@ -130,4 +156,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;

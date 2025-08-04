@@ -30,6 +30,13 @@
   transition: all 0.3s ease;
 }
 
+.auth-container .auth-card{
+  width: 50%;
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+}
 .auth-header {
   text-align: center;
   margin-bottom: 2rem;
