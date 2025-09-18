@@ -1,25 +1,26 @@
-import "../../css/SeekerDashboard.css";
-
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   FiSearch,
-  FiUser,
-  FiEdit,
   FiBriefcase,
   FiMapPin,
   FiDollarSign,
   FiClock,
+  FiUser,
   FiLogOut,
+  FiEdit,
+  FiSave,
+  FiX,
+  FiMenu,
+  FiCalendar,
 } from "react-icons/fi";
-import { FaReact, FaNodeJs, FaFigma } from "react-icons/fa";
-import { SiJavascript, SiAdobexd } from "react-icons/si";
 import "../../css/SeekerDashboard.css";
+import axios from "axios";
 
-const SeekerDashboard = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const SeekerDashboard = ({ jobsData = [] }) => {
+  const [jobs, setJobs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [profile, setProfile] = useState({
     name: "",
@@ -27,341 +28,367 @@ const SeekerDashboard = () => {
     skills: "",
     experience: "",
     education: "",
-    resume: null,
-    jobType: "",
-    workPreference: "",
-    salaryExpectation: "",
-    portfolio: "",
   });
+  const [tempProfile, setTempProfile] = useState(profile);
+  // Fetch jobs from backend
+  const fetchAllJobs = async () => {
+    try {
+      const res = await axios.get("http://192.168.1.68:5000/api/jobs/getJobs");
 
-  const [recommendedJobs, setRecommendedJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
-
-  // Load profile data from registration
-  useEffect(() => {
-    if (location.state?.formData) {
-      const formData = location.state.formData;
-      setProfile({
-        name: formData.fullName || "",
-        email: formData.email || "",
-        skills: formData.skills || "",
-        experience: formData.experience || "",
-        education: formData.education || "",
-        resume: formData.resume || null,
-        jobType: formData.jobType || "",
-        workPreference: formData.workPreference || "",
-        salaryExpectation: formData.salaryExpectation || "",
-        portfolio: formData.portfolio || "",
-      });
+      setFilteredJobs(res.data);
+    } catch (error) {
+      console.log("Error fetching jobs:", error);
     }
+  };
 
-    // Fetch recommended jobs (mock data)
-    const fetchJobs = () => {
-      const mockJobs = [
-        {
-          id: 1,
-          title: "Frontend Developer (React)",
-          company: "TechVision Inc.",
-          match: 92,
-          location: "Remote",
-          type: "Full-time",
-          salary: "$95,000 - $120,000",
-          posted: "2 days ago",
-          skills: "React, JavaScript, HTML/CSS",
-          logo: <FaReact className="company-logo react" />,
-        },
-        {
-          id: 2,
-          title: "UI/UX Designer",
-          company: "DesignHub",
-          match: 88,
-          location: "New York, NY",
-          type: "Full-time",
-          salary: "$85,000 - $110,000",
-          posted: "1 week ago",
-          skills: "Figma, Adobe XD, User Research",
-          logo: <FaFigma className="company-logo figma" />,
-        },
-        {
-          id: 3,
-          title: "Backend Developer (Node.js)",
-          company: "DataSystems",
-          match: 85,
-          location: "San Francisco",
-          type: "Full-time",
-          salary: "$100,000 - $140,000",
-          posted: "3 days ago",
-          skills: "Node.js, MongoDB, AWS",
-          logo: <FaNodeJs className="company-logo node" />,
-        },
-      ];
-      setRecommendedJobs(mockJobs);
-      setFilteredJobs(mockJobs);
-    };
-
-    fetchJobs();
-  }, [location.state]);
+  // Initialize jobs from props
+  useEffect(() => {
+    fetchAllJobs();
+  }, []);
 
   // Filter jobs based on search query
   useEffect(() => {
     if (searchQuery.trim() === "") {
-      setFilteredJobs(recommendedJobs);
+      setFilteredJobs(jobs);
     } else {
-      const filtered = recommendedJobs.filter(
+      const filtered = jobs.filter(
         (job) =>
           job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.skills.toLowerCase().includes(searchQuery.toLowerCase())
+          job.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          job.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          job.qualifications.some((qual) =>
+            qual.toLowerCase().includes(searchQuery.toLowerCase())
+          )
       );
       setFilteredJobs(filtered);
     }
-  }, [searchQuery, recommendedJobs]);
+  }, [searchQuery, jobs]);
 
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+  // Format date
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   };
 
-  const handleSaveProfile = () => {
-    console.log("Profile saved:", profile);
+  // Calculate days until expiry
+  const getDaysUntilExpiry = (dateString) => {
+    const today = new Date();
+    const expiryDate = new Date(dateString);
+    const diffTime = expiryDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  // Format salary
+  const formatSalary = (salary) => {
+    const num = parseInt(salary);
+    if (num >= 100000) {
+      return `$${(num / 1000).toFixed(0)}k`;
+    }
+    return `$${num.toLocaleString()}`;
+  };
+
+  const handleProfileUpdate = () => {
+    setProfile(tempProfile);
+    setEditMode(false);
+  };
+
+  const handleCancelEdit = () => {
+    setTempProfile(profile);
     setEditMode(false);
   };
 
   const handleApplyJob = (jobId) => {
-    const job = recommendedJobs.find((job) => job.id === jobId);
-    navigate("/apply-job", { state: { job } });
-  };
-
-  const handleLogout = () => {
-    // Add logout logic here
-    navigate("/login");
-  };
-
-  const getSkillIcon = (skill) => {
-    switch (skill.toLowerCase()) {
-      case "react":
-        return <FaReact className="skill-icon react" />;
-      case "javascript":
-        return <SiJavascript className="skill-icon js" />;
-      case "figma":
-        return <FaFigma className="skill-icon figma" />;
-      case "adobe xd":
-        return <SiAdobexd className="skill-icon xd" />;
-      case "node.js":
-        return <FaNodeJs className="skill-icon node" />;
-      default:
-        return null;
-    }
+    // try{
+    //   await axios.post()
+    // }
+    alert(`Applied to job: ${jobId}`);
   };
 
   return (
     <div className="seeker-dashboard">
-      {/* Header with Profile Section */}
+      {/* Header */}
       <header className="dashboard-header">
         <div className="logo-container">
-          <h1>Hirelyst</h1>
-          <span className="tagline">Find Your Dream Job</span>
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <FiMenu />
+          </button>
+          <h1>JobSeeker</h1>
+          <p className="tagline">Find your dream job</p>
         </div>
 
         <div className="profile-section">
-          <div className="profile-info-container">
-            <div className="profile-icon">
-              {profile.name ? profile.name.charAt(0).toUpperCase() : "U"}
-            </div>
-            <div className="profile-name">{profile.name || "User"}</div>
-            <button className="logout-btn" onClick={handleLogout}>
-              <FiLogOut /> Logout
-            </button>
+          <div className="profile-info">
+            <span className="profile-name">{profile.name || "Guest User"}</span>
+            <span className="profile-email">
+              {profile.email || "guest@email.com"}
+            </span>
           </div>
+          <div className="profile-icon">
+            <FiUser />
+          </div>
+          <button className="logout-btn">
+            <FiLogOut /> Logout
+          </button>
         </div>
       </header>
 
       <div className="dashboard-container">
-        {/* Left Side - Profile Details */}
-        <aside className="profile-details">
-          <h2 className="section-title">
-            <FiUser className="section-icon" />
-            My Profile
-          </h2>
+        {/* Sidebar Overlay */}
+        {sidebarOpen && (
+          <div
+            className="sidebar-overlay"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
+        )}
 
-          {editMode ? (
-            <div className="edit-profile-form">
-              <div className="form-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={profile.name}
-                  onChange={handleProfileChange}
-                />
-              </div>
+        {/* Sidebar */}
+        <aside className={`sidebar ${sidebarOpen ? "sidebar-open" : ""}`}>
+          <button
+            className="sidebar-close-btn"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <FiX />
+          </button>
 
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={profile.email}
-                  onChange={handleProfileChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Skills</label>
-                <input
-                  type="text"
-                  name="skills"
-                  value={profile.skills}
-                  onChange={handleProfileChange}
-                  placeholder="Separate skills with commas"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Experience</label>
-                <input
-                  type="text"
-                  name="experience"
-                  value={profile.experience}
-                  onChange={handleProfileChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Education</label>
-                <input
-                  type="text"
-                  name="education"
-                  value={profile.education}
-                  onChange={handleProfileChange}
-                />
-              </div>
-
-              <div className="form-actions">
-                <button className="save-btn" onClick={handleSaveProfile}>
-                  Save Profile
-                </button>
-                <button
-                  className="cancel-btn"
-                  onClick={() => setEditMode(false)}
-                >
-                  Cancel
-                </button>
-              </div>
+          <div className="profile-section-sidebar">
+            <div className="profile-header">
+              <FiUser className="profile-icon-large" />
+              <h3>Profile</h3>
             </div>
-          ) : (
-            <div className="profile-info">
-              <div className="info-item">
-                <span className="label">Email:</span>
-                <span className="value">{profile.email}</span>
-              </div>
 
-              <div className="info-item">
-                <span className="label">Skills:</span>
-                <div className="skills-list">
-                  {profile.skills.split(",").map((skill, index) => (
-                    <div key={index} className="skill-tag">
-                      {getSkillIcon(skill.trim())}
-                      <span>{skill.trim()}</span>
-                    </div>
-                  ))}
+            {editMode ? (
+              <div className="profile-edit-form">
+                <div className="form-group">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    value={tempProfile.name}
+                    onChange={(e) =>
+                      setTempProfile({ ...tempProfile, name: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={tempProfile.email}
+                    onChange={(e) =>
+                      setTempProfile({ ...tempProfile, email: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Skills</label>
+                  <textarea
+                    value={tempProfile.skills}
+                    onChange={(e) =>
+                      setTempProfile({ ...tempProfile, skills: e.target.value })
+                    }
+                    rows="2"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Experience</label>
+                  <input
+                    type="text"
+                    value={tempProfile.experience}
+                    onChange={(e) =>
+                      setTempProfile({
+                        ...tempProfile,
+                        experience: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Education</label>
+                  <input
+                    type="text"
+                    value={tempProfile.education}
+                    onChange={(e) =>
+                      setTempProfile({
+                        ...tempProfile,
+                        education: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="form-buttons">
+                  <button onClick={handleProfileUpdate} className="save-btn">
+                    <FiSave /> Save
+                  </button>
+                  <button onClick={handleCancelEdit} className="cancel-btn">
+                    <FiX /> Cancel
+                  </button>
                 </div>
               </div>
-
-              <div className="info-item">
-                <span className="label">Experience:</span>
-                <span className="value">{profile.experience}</span>
+            ) : (
+              <div className="profile-display">
+                <div className="profile-item">
+                  <span className="label">Name:</span>
+                  <span className="value">{profile.name || "Not set"}</span>
+                </div>
+                <div className="profile-item">
+                  <span className="label">Email:</span>
+                  <span className="value">{profile.email || "Not set"}</span>
+                </div>
+                <div className="profile-item">
+                  <span className="label">Skills:</span>
+                  <div className="skills-display">
+                    {profile.skills ? (
+                      profile.skills.split(",").map((skill, index) => (
+                        <span key={index} className="skill-tag">
+                          {skill.trim()}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="no-data">No skills added</span>
+                    )}
+                  </div>
+                </div>
+                <div className="profile-item">
+                  <span className="label">Experience:</span>
+                  <span className="value">
+                    {profile.experience || "Not set"}
+                  </span>
+                </div>
+                <div className="profile-item">
+                  <span className="label">Education:</span>
+                  <span className="value">
+                    {profile.education || "Not set"}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setEditMode(true)}
+                  className="edit-profile-btn"
+                >
+                  <FiEdit /> Edit Profile
+                </button>
               </div>
-
-              <div className="info-item">
-                <span className="label">Education:</span>
-                <span className="value">{profile.education}</span>
-              </div>
-
-              <button className="edit-btn" onClick={() => setEditMode(true)}>
-                <FiEdit /> Edit Profile
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </aside>
 
-        {/* Main Content - Search and Jobs */}
+        {/* Main Content */}
         <main className="main-content">
-          {/* Search Bar */}
-          <div className="search-container">
-            <FiSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search jobs by title, company, or skills..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          {/* Search Section */}
+          <div className="search-section">
+            <div className="search-container">
+              <FiSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search jobs by title, category, location..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+            </div>
           </div>
 
-          {/* Recommended Jobs Section */}
-          <section className="recommended-jobs">
-            <h2 className="section-title">
-              <FiBriefcase className="section-icon" />
-              Recommended for You
-            </h2>
-            <p className="match-criteria">
-              Based on your skills: <strong>{profile.skills}</strong>
-            </p>
+          {/* Jobs Section */}
+          <section className="jobs-section">
+            <div className="section-header">
+              <h2>
+                <FiBriefcase className="section-icon" />
+                Available Jobs
+              </h2>
+              <p className="jobs-count">
+                {filteredJobs.length}{" "}
+                {filteredJobs.length === 1 ? "job" : "jobs"} found
+              </p>
+            </div>
 
             <div className="jobs-list">
               {filteredJobs.length > 0 ? (
                 filteredJobs.map((job) => (
-                  <div key={job.id} className="job-card">
-                    <div className="job-card-header">
-                      {job.logo}
-                      <div className="job-title-container">
-                        <h3>{job.title}</h3>
-                        <span className="job-company">{job.company}</span>
-                      </div>
-                      <span className="match-percentage">
-                        {job.match}% Match
-                      </span>
+                  <div key={job._id} className="job-card">
+                    <div className="job-header">
+                      <h4 className="job-title">{job.title}</h4>
+                      <span className="job-category">{job.category}</span>
                     </div>
 
                     <div className="job-details">
-                      <span>
-                        <FiMapPin /> {job.location}
-                      </span>
-                      <span>
-                        <FiBriefcase /> {job.type}
-                      </span>
-                      <span>
-                        <FiDollarSign /> {job.salary}
-                      </span>
-                      <span>
-                        <FiClock /> {job.posted}
-                      </span>
-                    </div>
-
-                    <div className="job-skills">
-                      <strong>Required Skills:</strong>
-                      <div className="job-skill-tags">
-                        {job.skills.split(",").map((skill, index) => (
-                          <span key={index} className="skill-tag">
-                            {getSkillIcon(skill.trim())}
-                            {skill.trim()}
-                          </span>
-                        ))}
+                      <div className="detail-item">
+                        <FiMapPin className="detail-icon" />
+                        <span>{job.location}</span>
+                      </div>
+                      <div className="detail-item">
+                        <FiDollarSign className="detail-icon" />
+                        <span className="salary">
+                          {formatSalary(job.salary)}
+                        </span>
+                      </div>
+                      <div className="detail-item">
+                        <FiCalendar className="detail-icon" />
+                        <span>Expires: {formatDate(job.expiry_date)}</span>
+                      </div>
+                      <div className="detail-item">
+                        <FiClock className="detail-icon" />
+                        <span>Posted: {formatDate(job.createdAt)}</span>
                       </div>
                     </div>
 
+                    {job.qualifications && job.qualifications.length > 0 && (
+                      <div className="qualifications">
+                        <strong>Required Qualifications:</strong>
+                        <div className="qualifications-list">
+                          {job.qualifications.map((qual, index) => (
+                            <span key={index} className="qualification-tag">
+                              {qual}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="job-status">
+                      {getDaysUntilExpiry(job.expiry_date) > 0 ? (
+                        <span
+                          className={`status-badge ${
+                            getDaysUntilExpiry(job.expiry_date) <= 7
+                              ? "urgent"
+                              : "active"
+                          }`}
+                        >
+                          {getDaysUntilExpiry(job.expiry_date)} days left
+                        </span>
+                      ) : (
+                        <span className="status-badge expired">Expired</span>
+                      )}
+                    </div>
+
                     <button
-                      className="apply-btn"
-                      onClick={() => handleApplyJob(job.id)}
+                      className={`apply-btn ${
+                        getDaysUntilExpiry(job.expiry_date) <= 0
+                          ? "disabled"
+                          : ""
+                      }`}
+                      onClick={() => handleApplyJob(job._id)}
+                      disabled={getDaysUntilExpiry(job.expiry_date) <= 0}
                     >
-                      Apply Now
+                      {getDaysUntilExpiry(job.expiry_date) > 0
+                        ? "Apply Now"
+                        : "Job Expired"}
                     </button>
                   </div>
                 ))
               ) : (
-                <div className="no-results">
-                  <img src="/images/no-jobs.svg" alt="No jobs found" />
-                  <p>No jobs found matching your search criteria.</p>
+                <div className="no-jobs">
+                  <FiBriefcase className="no-jobs-icon" />
+                  <h3>No jobs found</h3>
+                  <p>
+                    {searchQuery
+                      ? "Try adjusting your search criteria"
+                      : "No job listings available at the moment"}
+                  </p>
                 </div>
               )}
             </div>

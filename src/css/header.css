@@ -1,12 +1,12 @@
 /* Header */
 .header-container{
-  border-bottom: 2px #003366 ;
+  border-bottom: 1px #003366 ;
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: 8px 0;
   width: 90%;
   margin: auto;
 }

@@ -1,13 +1,7 @@
+// src/components/auth/LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Typography,
-  Alert,
-} from "antd";
+import { Form, Input, Button, Select, Typography, Alert } from "antd";
 import { FaUser, FaLock, FaBriefcase, FaUserShield } from "react-icons/fa";
 import axios from "axios";
 import "../../css/Auth.css";
@@ -25,6 +19,7 @@ const LoginPage = () => {
 
   const handleUserTypeChange = (value) => {
     setUserType(value);
+    setError("");
   };
 
   const handleLogin = async (values) => {
@@ -45,23 +40,41 @@ const LoginPage = () => {
 
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem(
+            "providerProfile",
+            JSON.stringify(response.data.provider)
+          );
           navigate("/employer-dashboard");
         } else {
           throw new Error("Login failed");
         }
-
       } else if (userType === "admin") {
-
+        // Admin login flow (if needed, add API call)
         navigate("/admin-dashboard");
-
       } else if (userType === "seeker") {
-        setIsRegistering(true);
+        // Call seeker login API
+        // Seeker login
+        const response = await axios.post(
+          "http://localhost:5000/api/seekers/login",
+          { email, password }
+        );
+
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem(
+            "seekerProfile",
+            JSON.stringify(response.data.seeker)
+          );
+          navigate("/seeker-dashboard");
+        } else {
+          throw new Error("Login failed");
+        }
       } else {
         setError("Unsupported user type");
       }
-
     } catch (err) {
-      const message = err.response?.data?.message || err.message || "Login failed";
+      const message =
+        err.response?.data?.message || err.message || "Login failed";
       setError(message);
     }
   };
@@ -104,7 +117,9 @@ const LoginPage = () => {
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[{ required: true, message: "Please input your email!" }]}
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
               >
                 <Input prefix={<FaUser />} placeholder="Email" />
               </Form.Item>
@@ -112,7 +127,9 @@ const LoginPage = () => {
               <Form.Item
                 label="Password"
                 name="password"
-                rules={[{ required: true, message: "Please input your password!" }]}
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
               >
                 <Input.Password prefix={<FaLock />} placeholder="Password" />
               </Form.Item>
@@ -135,9 +152,14 @@ const LoginPage = () => {
               </Form.Item>
 
               <div className="auth-footer">
-                <Paragraph>
-                  New to Hirelyst? <Link to="/registerPage">Register here</Link>
-                </Paragraph>
+                {userType === "seeker" && (
+                  <Paragraph>
+                    New to Hirelyst?{" "}
+                    <Button type="link" onClick={() => setIsRegistering(true)}>
+                      Register here
+                    </Button>
+                  </Paragraph>
+                )}
               </div>
             </Form>
           </>

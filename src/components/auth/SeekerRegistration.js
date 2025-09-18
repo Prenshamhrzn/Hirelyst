@@ -1,220 +1,185 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Added import
-import {
-  FaArrowLeft,
-  FaUpload,
-  FaMoneyBillWave,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
+import React from "react";
+import { Form, Input, Button, Select, Typography, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../../css/Auth.css";
 
-const SeekerRegistration = ({ onBack }) => {
-  const navigate = useNavigate(); // Initialized navigate
+const { Option } = Select;
+const { Title, Text } = Typography;
 
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    skills: "",
-    experience: "0-2",
-    education: "",
-    resume: null,
-    jobType: "full-time",
-    workPreference: "hybrid",
-    salaryExpectation: "",
-    location: "",
-    portfolio: "",
-  });
+const SeekerRegistration = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const onFinish = async (values) => {
+    try {
+      const payload = {
+        fullName: values.fullName,
+        email: values.email,
+        phone: values.phone || "",
+        experience: values.experience || "",
+        education: values.education || "",
+        skills: values.skills || "",
+        jobType: values.jobType || "",
+        workPreference: values.workPreference || "",
+        portfolio: values.portfolio || "",
+        password: values.password,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/seekers/register",
+        payload,
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-  const handleFileChange = (e) => {
-    setFormData((prev) => ({ ...prev, resume: e.target.files[0] }));
-  };
+      console.log("Registration response:", response.data); // <-- Add this
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Registration data:", formData);
-    navigate("/seeker-dashboard", { state: { formData } }); // Using navigate
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem(
+        "seekerProfile",
+        JSON.stringify(response.data.seeker)
+      );
+
+      message.success("Registration successful!");
+      navigate("/seeker-dashboard");
+    } catch (err) {
+      console.error("Registration error:", err);
+      message.error(err.response?.data?.message || "Server error");
+    }
   };
 
   return (
-    <div className="registration-container">
-      <button onClick={onBack} className="back-button">
-        <FaArrowLeft /> Back
-      </button>
+    <div className="auth-container">
+      <div className="auth-card">
+        <Title level={2}>Seeker CV Registration</Title>
+        <Form form={form} layout="vertical" onFinish={onFinish}>
+          <Form.Item
+            name="fullName"
+            label="Full Name*"
+            rules={[{ required: true, message: "Full name is required" }]}
+          >
+            <Input />
+          </Form.Item>
 
-      <h2 className="registration-title">Complete Your Profile</h2>
-      <p className="registration-subtitle">
-        Help us find the perfect matches for you
-      </p>
+          <Form.Item
+            name="email"
+            label="Email*"
+            rules={[
+              { required: true, message: "Email is required" },
+              { type: "email", message: "Enter a valid email" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-      <form onSubmit={handleSubmit} className="registration-form">
-        <div className="form-section">
-          <h3 className="section-title">Personal Information</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Full Name*</label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <Form.Item name="phone" label="Phone Number">
+            <Input />
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Email*</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <Form.Item
+            name="experience"
+            label="Experience*"
+            rules={[{ required: true, message: "Experience is required" }]}
+          >
+            <Select placeholder="Select Experience">
+              <Option value="Fresher">Fresher</Option>
+              <Option value="1-3 years">1-3 years</Option>
+              <Option value="3-5 years">3-5 years</Option>
+              <Option value="5+ years">5+ years</Option>
+            </Select>
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Phone Number</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
+          <Form.Item
+            name="education"
+            label="Education*"
+            rules={[{ required: true, message: "Education is required" }]}
+          >
+            <Select placeholder="Select Education">
+              <Option value="High School">High School</Option>
+              <Option value="Bachelor">Bachelor</Option>
+              <Option value="Master">Master</Option>
+              <Option value="PhD">PhD</Option>
+            </Select>
+          </Form.Item>
 
-        <div className="form-section">
-          <h3 className="section-title">Professional Details</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Skills* (comma separated)</label>
-              <input
-                type="text"
-                name="skills"
-                value={formData.skills}
-                onChange={handleChange}
-                placeholder="React, Node.js, UX Design"
-                required
-              />
-            </div>
+          <Form.Item
+            name="skills"
+            label="Skills*"
+            rules={[{ required: true, message: "Skills are required" }]}
+          >
+            <Input placeholder="Separate skills with commas (React, Node.js)" />
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Years of Experience*</label>
-              <select
-                name="experience"
-                value={formData.experience}
-                onChange={handleChange}
-                required
-              >
-                <option value="0-2">0-2 years</option>
-                <option value="3-5">3-5 years</option>
-                <option value="5+">5+ years</option>
-              </select>
-            </div>
+          <Form.Item
+            name="jobType"
+            label="Job Type*"
+            rules={[{ required: true, message: "Select job type" }]}
+          >
+            <Select placeholder="Select Job Type">
+              <Option value="Full-time">Full-time</Option>
+              <Option value="Part-time">Part-time</Option>
+              <Option value="Internship">Internship</Option>
+            </Select>
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Highest Education</label>
-              <input
-                type="text"
-                name="education"
-                value={formData.education}
-                onChange={handleChange}
-                placeholder="Degree and Major"
-              />
-            </div>
+          <Form.Item
+            name="workPreference"
+            label="Work Preference*"
+            rules={[{ required: true, message: "Select work preference" }]}
+          >
+            <Select placeholder="Select Work Preference">
+              <Option value="Remote">Remote</Option>
+              <Option value="Onsite">Onsite</Option>
+              <Option value="Hybrid">Hybrid</Option>
+            </Select>
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Portfolio/GitHub</label>
-              <input
-                type="url"
-                name="portfolio"
-                value={formData.portfolio}
-                onChange={handleChange}
-                placeholder="https://"
-              />
-            </div>
-          </div>
-        </div>
+          <Form.Item name="portfolio" label="Portfolio / LinkedIn (Optional)">
+            <Input placeholder="Enter link if available" />
+          </Form.Item>
 
-        <div className="form-section">
-          <h3 className="section-title">Job Preferences</h3>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Job Type*</label>
-              <select
-                name="jobType"
-                value={formData.jobType}
-                onChange={handleChange}
-                required
-              >
-                <option value="full-time">Full Time</option>
-                <option value="part-time">Part Time</option>
-                <option value="contract">Contract</option>
-                <option value="internship">Internship</option>
-              </select>
-            </div>
+          <Form.Item
+            name="password"
+            label="Password*"
+            rules={[
+              { required: true, message: "Password is required" },
+              { min: 6, message: "Password must be at least 6 characters" },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Work Preference*</label>
-              <select
-                name="workPreference"
-                value={formData.workPreference}
-                onChange={handleChange}
-                required
-              >
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-                <option value="onsite">On-site</option>
-              </select>
-            </div>
+          <Form.Item
+            name="confirmPassword"
+            label="Confirm Password*"
+            dependencies={["password"]}
+            rules={[
+              { required: true, message: "Please confirm your password" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value)
+                    return Promise.resolve();
+                  return Promise.reject(new Error("Passwords do not match"));
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-            <div className="form-group">
-              <label>Salary Expectations</label>
-              <div className="input-with-icon">
-                <FaMoneyBillWave className="input-icon" />
-                <input
-                  type="text"
-                  name="salaryExpectation"
-                  value={formData.salaryExpectation}
-                  onChange={handleChange}
-                  placeholder="e.g. Rs 20,000 or Negotiable"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Register CV
+            </Button>
+          </Form.Item>
 
-        <div className="form-section">
-          <h3 className="section-title">Resume Upload</h3>
-          <div className="file-upload-container">
-            <label className="file-upload-label">
-              <FaUpload className="upload-icon" />
-              <span>
-                {formData.resume ? formData.resume.name : "Upload Resume (PDF)"}
-              </span>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-                className="file-upload-input"
-              />
-            </label>
-          </div>
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" className="submit-button">
-            Complete Profile
-          </button>
-        </div>
-      </form>
+          <Text>
+            Already have an account?{" "}
+            <Button type="link" onClick={() => navigate("/loginPage")}>
+              Login
+            </Button>
+          </Text>
+        </Form>
+      </div>
     </div>
   );
 };

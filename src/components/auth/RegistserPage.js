@@ -27,10 +27,16 @@ const RegisterPage = () => {
         </div>
 
         <div className="role-selection">
-          <button className="auth-button" onClick={() => handleSelect("seeker")}>
+          <button
+            className="auth-button"
+            onClick={() => handleSelect("seeker")}
+          >
             <FaUser /> Job Seeker
           </button>
-          <button className="auth-button" onClick={() => handleSelect("provider")}>
+          <button
+            className="auth-button"
+            onClick={() => handleSelect("provider")}
+          >
             <FaBriefcase /> Employer
           </button>
           <button className="auth-button" onClick={() => handleSelect("admin")}>

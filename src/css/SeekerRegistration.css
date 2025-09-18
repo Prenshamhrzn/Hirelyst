@@ -1,0 +1,96 @@
+/* SeekerRegistration.css */
+
+.seeker-page {
+  background-color: #096dd9;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.registration-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 25px 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.registration-container h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold !important; /* Make "Complete Your Profile" bold */
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.registration-container .ant-typography {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 400; /* Less bold for subtext */
+}
+
+.registration-form .ant-form-item {
+  margin-bottom: 12px;
+}
+
+.registration-form .ant-form-item-label > label {
+  font-weight: 500; /* Medium-bold for field labels */
+  font-size: 13px;
+  color: #333;
+}
+
+.registration-form .ant-input,
+.registration-form .ant-select-selector {
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+.registration-form .ant-select {
+  width: 100%;
+}
+
+.submit-button {
+  display: block;
+  margin: 15px auto 0;
+  width: 100%;
+  max-width: 200px;
+  height: 38px;
+  background-color: #1890ff;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #096dd9;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: #1890ff;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 400;
+}
+
+.back-button svg {
+  margin-right: 5px;
+}

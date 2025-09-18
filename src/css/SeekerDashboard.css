@@ -1,550 +1,872 @@
-/* Color Variables */
-:root {
-  --primary: #6c63ff;
-  --secondary: #4d44db;
-  --accent: #ff6584;
-  --light: #f8f9fa;
-  --dark: #2c3e50;
-  --success: #4caf50;
-  --warning: #ff9800;
-  --danger: #f44336;
-  --text: #333333;
-  --text-light: #777777;
+/* SeekerDashboard.css - Enhanced Mobile Responsive */
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Main Layout */
+/* Main Container */
 .seeker-dashboard {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f5f7ff;
-  font-family: 'Poppins', sans-serif;
-  color: var(--text);
+  background: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.dashboard-header {
+/* Header */
+.seeker-dashboard .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.logo-container {
+.seeker-dashboard .logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seeker-dashboard .mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.seeker-dashboard .mobile-menu-btn:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.seeker-dashboard .logo-container h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.seeker-dashboard .tagline {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+.seeker-dashboard .profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seeker-dashboard .profile-info {
   display: flex;
   flex-direction: column;
+  text-align: right;
 }
 
-.logo-container h1 {
-  font-size: 1.8rem;
-  margin: 0;
-  font-weight: 700;
-  background: linear-gradient(to right, white, #e0e0ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.tagline {
+.seeker-dashboard .profile-name {
+  font-weight: 600;
   font-size: 0.9rem;
-  opacity: 0.9;
 }
 
-/* Profile Section */
-/* Profile Section */
-.profile-section {
-  display: flex;
-  align-items: center;
+.seeker-dashboard .profile-email {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.8);
 }
 
-.profile-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.profile-icon {
-  width: 40px;
-  height: 40px;
+.seeker-dashboard .profile-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(255,255,255,0.2);
   border-radius: 50%;
-  background-color: white;
-  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
 }
 
-.profile-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.profile-email {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 3px;
-}
-
-/* Updated Logout Button with Black Color */
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
+.seeker-dashboard .logout-btn {
+  background: rgba(255,255,255,0.2);
   border: none;
-  color: #000000; /* Black color */
-  font-size: 0.85rem;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.logout-btn:hover {
-  background-color: rgba(0, 0, 0, 0.05); /* Light gray on hover */
-}
-
-.logout-btn svg {
-  margin-top: 1px;
-  color: #000000; /* Black color for icon */
-}
-
-
-.dashboard-container {
-  display: flex;
-  flex: 1;
-  padding: 2rem;
-  gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* Profile Section */
-.profile-details {
-  width: 320px;
-  background-color: white;
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.section-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.3rem;
-  color: var(--dark);
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.seeker-dashboard .logout-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
+
+/* Layout Container */
+.seeker-dashboard .dashboard-container {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* Sidebar */
+.seeker-dashboard .sidebar {
+  width: 320px;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 80px;
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.seeker-dashboard .sidebar.sidebar-open {
+  transform: translateX(0);
+}
+
+.seeker-dashboard .sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 40;
+  display: none;
+}
+
+.seeker-dashboard .sidebar-close-btn {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.seeker-dashboard .sidebar-close-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Profile Section in Sidebar */
+.seeker-dashboard .profile-section-sidebar {
+  padding: 2rem;
+}
+
+.seeker-dashboard .profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: 2px solid #e9ecef;
 }
 
-.section-icon {
-  color: var(--primary);
+.seeker-dashboard .profile-icon-large {
+  font-size: 2rem;
+  color: #667eea;
 }
 
-.profile-info {
+.seeker-dashboard .profile-header h3 {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Profile Display */
+.seeker-dashboard .profile-display {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.info-item {
+.seeker-dashboard .profile-item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.label {
-  font-weight: 600;
-  color: var(--text-light);
+.seeker-dashboard .profile-item .label {
   font-size: 0.9rem;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.value {
-  color: var(--text);
+.seeker-dashboard .profile-item .value {
   font-size: 1rem;
+  color: #2c3e50;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #667eea;
 }
 
-.skills-list {
+.seeker-dashboard .skills-display {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.skill-tag {
-  background-color: #f0f2ff;
-  color: var(--primary);
+.seeker-dashboard .skill-tag {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  font-size: 0.8rem;
   font-weight: 500;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
 }
 
-.skill-icon {
-  font-size: 1rem;
+.seeker-dashboard .no-data {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
-.skill-icon.react { color: #61dafb; }
-.skill-icon.js { color: #f7df1e; }
-.skill-icon.figma { color: #f24e1e; }
-.skill-icon.xd { color: #ff61f6; }
-.skill-icon.node { color: #68a063; }
-
-.edit-btn, .save-btn, .cancel-btn {
+.seeker-dashboard .edit-profile-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
   margin-top: 1rem;
 }
 
-.edit-btn {
-  background-color: var(--primary);
-  color: white;
-}
-
-.edit-btn:hover {
-  background-color: var(--secondary);
+.seeker-dashboard .edit-profile-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(108, 99, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
-.save-btn {
-  background-color: var(--success);
-  color: white;
-}
-
-.cancel-btn {
-  background-color: #f0f0f0;
-  color: var(--text);
-}
-
-.form-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-/* Main Content */
-.main-content {
-  flex: 1;
+/* Profile Edit Form */
+.seeker-dashboard .profile-edit-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
-.search-container {
-  position: relative;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  padding: 0.8rem 1.5rem;
-  display: flex;
-  align-items: center;
-  transition: all 0.3s;
-}
-
-.search-container:focus-within {
-  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
-}
-
-.search-icon {
-  color: var(--primary);
-  font-size: 1.2rem;
-  margin-right: 1rem;
-}
-
-.search-container input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  padding: 0.5rem 0;
-  background: transparent;
-}
-
-.recommended-jobs {
-  background-color: white;
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.match-criteria {
-  color: var(--text-light);
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-}
-
-.jobs-list {
+.seeker-dashboard .form-group {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.job-card {
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s;
-  background-color: white;
-}
-
-.job-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(108, 99, 255, 0.1);
-  border-color: var(--primary);
-}
-
-.job-card-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.company-logo {
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-
-.company-logo.react { color: #61dafb; }
-.company-logo.figma { color: #f24e1e; }
-.company-logo.node { color: #68a063; }
-
-.job-title-container {
-  flex: 1;
-}
-
-.job-title-container h3 {
-  font-size: 1.2rem;
-  color: var(--dark);
-  margin: 0 0 0.2rem 0;
-}
-
-.job-company {
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
-
-.match-percentage {
-  background-color: var(--success);
-  color: white;
-  padding: 0.3rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.job-details {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin: 1rem 0;
-  color: var(--text-light);
-  font-size: 0.9rem;
-}
-
-.job-details span {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
 }
 
-.job-skills {
-  margin: 1.5rem 0;
+.seeker-dashboard .form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #495057;
 }
 
-.job-skills strong {
-  display: block;
-  margin-bottom: 0.8rem;
-  color: var(--dark);
+.seeker-dashboard .form-group input,
+.seeker-dashboard .form-group textarea {
+  padding: 0.8rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
 }
 
-.job-skill-tags {
+.seeker-dashboard .form-group input:focus,
+.seeker-dashboard .form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.seeker-dashboard .form-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.apply-btn {
-  background: linear-gradient(to right, var(--primary), var(--secondary));
-  color: white;
+.seeker-dashboard .save-btn,
+.seeker-dashboard .cancel-btn {
+  flex: 1;
+  padding: 0.8rem;
   border: none;
-  padding: 0.9rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-  width: 100%;
-  transition: all 0.3s;
-  font-size: 1rem;
-  box-shadow: 0 4px 8px rgba(108, 99, 255, 0.3);
-}
-
-.apply-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(108, 99, 255, 0.4);
-}
-
-.no-results {
-  text-align: center;
-  padding: 3rem 0;
-}
-
-.no-results img {
-  width: 200px;
-  margin-bottom: 1.5rem;
-  opacity: 0.7;
-}
-
-.no-results p {
-  color: var(--text-light);
-  font-size: 1.1rem;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-  
-  .profile-details {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .profile-info-container {
-    flex-direction: row;
-    gap: 1rem;
-    align-items: center;
-  }
-  
-  .profile-icon {
-    margin-bottom: 0;
-  }
-  
-  .logout-btn {
-    margin-left: auto;
-  }
-  
-  .form-actions {
-    flex-direction: column;
-  }
-  
-  .job-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  
-  .match-percentage {
-    align-self: flex-start;
-  }
-}
-/* Draggable Logout Button Styles */
-.logout-container {
-  width: 150px;
-  height: 40px;
-  position: relative;
-  margin-left: 1rem;
-  overflow: hidden;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.logout-slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  user-select: none;
-}
-
-.logout-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  gap: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.seeker-dashboard .save-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.seeker-dashboard .save-btn:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.seeker-dashboard .cancel-btn {
+  background: #6c757d;
+  color: #fff;
+}
+
+.seeker-dashboard .cancel-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* Main Content */
+.seeker-dashboard .main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+/* Search Section */
+.seeker-dashboard .search-section {
+  margin-bottom: 2rem;
+}
+
+.seeker-dashboard .search-container {
+  position: relative;
+  max-width: 500px;
+}
+
+.seeker-dashboard .search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.seeker-dashboard .search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.seeker-dashboard .search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Jobs Section */
+.seeker-dashboard .jobs-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.seeker-dashboard .section-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.seeker-dashboard .section-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.seeker-dashboard .section-icon {
+  color: #667eea;
+  font-size: 1.8rem;
+}
+
+.seeker-dashboard .jobs-count {
+  color: #6c757d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Jobs List */
+.seeker-dashboard .jobs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.seeker-dashboard .job-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.seeker-dashboard .job-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.seeker-dashboard .job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #667eea;
+}
+
+.seeker-dashboard .job-header {
+  margin-bottom: 1rem;
+}
+
+.seeker-dashboard .job-title {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.seeker-dashboard .job-category {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.seeker-dashboard .job-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+}
+
+.seeker-dashboard .detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.seeker-dashboard .detail-icon {
+  color: #667eea;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.seeker-dashboard .salary {
+  font-weight: 600;
+  color: #28a745;
+}
+
+/* Qualifications */
+.seeker-dashboard .qualifications {
+  margin: 1.5rem 0;
+}
+
+.seeker-dashboard .qualifications strong {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.seeker-dashboard .qualifications-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.seeker-dashboard .qualification-tag {
+  background: #f8f9fa;
+  color: #495057;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  border: 1px solid #e9ecef;
+}
+
+/* Job Status */
+.seeker-dashboard .job-status {
+  margin: 1rem 0;
+}
+
+.seeker-dashboard .status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
   font-size: 0.8rem;
   font-weight: 500;
 }
 
-.logout-track span {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  transition: opacity 0.3s;
+.seeker-dashboard .status-badge.active {
+  background: #d4edda;
+  color: #155724;
 }
 
-.logout-thumb {
-  position: absolute;
-  left: 5px;
-  width: 30px;
-  height: 30px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary);
-  transition: transform 0.2s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.seeker-dashboard .status-badge.urgent {
+  background: #f8d7da;
+  color: #721c24;
 }
 
-.logout-slider:active .logout-thumb {
-  transform: scale(0.95);
+.seeker-dashboard .status-badge.expired {
+  background: #f5f5f5;
+  color: #6c757d;
 }
 
-/* When dragging */
-.logout-container.active {
-  background-color: rgba(255, 255, 255, 0.3);
+/* Apply Button */
+.seeker-dashboard .apply-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
 }
 
-/* Responsive adjustments */
+.seeker-dashboard .apply-btn:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.seeker-dashboard .apply-btn.disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* No Jobs State */
+.seeker-dashboard .no-jobs {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+  grid-column: 1 / -1;
+}
+
+.seeker-dashboard .no-jobs-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.seeker-dashboard .no-jobs h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.seeker-dashboard .no-jobs p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .seeker-dashboard .main-content {
+    margin-left: 0;
+  }
+  
+  .seeker-dashboard .sidebar {
+    position: fixed;
+  }
+}
+
 @media (max-width: 768px) {
-  .logout-container {
-    width: 120px;
+  /* Header Mobile */
+  .seeker-dashboard .dashboard-header {
+    padding: 1rem;
+  }
+  
+  .seeker-dashboard .mobile-menu-btn {
+    display: block;
+  }
+  
+  .seeker-dashboard .profile-info {
+    display: none;
+  }
+  
+  .seeker-dashboard .tagline {
+    display: none;
+  }
+  
+  .seeker-dashboard .logo-container h1 {
+    font-size: 1.4rem;
+  }
+  
+  /* Sidebar Mobile */
+  .seeker-dashboard .sidebar {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .seeker-dashboard .sidebar-overlay {
+    display: block;
+  }
+  
+  .seeker-dashboard .sidebar-close-btn {
+    display: block;
+  }
+  
+  .seeker-dashboard .profile-section-sidebar {
+    padding: 1.5rem;
+    padding-top: 4rem;
+  }
+  
+  /* Main Content Mobile */
+  .seeker-dashboard .main-content {
+    padding: 1rem;
+  }
+  
+  .seeker-dashboard .jobs-section {
+    padding: 1.5rem;
+  }
+  
+  .seeker-dashboard .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  /* Jobs Grid Mobile */
+  .seeker-dashboard .jobs-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .seeker-dashboard .job-card {
+    padding: 1.2rem;
+  }
+  
+  .seeker-dashboard .job-title {
+    font-size: 1.2rem;
+  }
+  
+  /* Search Mobile */
+  .seeker-dashboard .search-container {
+    max-width: 100%;
+  }
+  
+  .seeker-dashboard .search-input {
+    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+  }
+  
+  .seeker-dashboard .search-icon {
+    left: 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seeker-dashboard .dashboard-header {
+    padding: 0.8rem;
+  }
+  
+  .seeker-dashboard .logo-container h1 {
+    font-size: 1.2rem;
+  }
+  
+  .seeker-dashboard .main-content {
+    padding: 0.8rem;
+  }
+  
+  .seeker-dashboard .jobs-section {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .seeker-dashboard .job-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .seeker-dashboard .section-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .seeker-dashboard .job-title {
+    font-size: 1.1rem;
+  }
+  
+  .seeker-dashboard .form-buttons {
+    flex-direction: column;
+  }
+  
+  .seeker-dashboard .logout-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .seeker-dashboard .logout-btn span {
+    display: none;
+  }
+  
+  .seeker-dashboard .profile-icon {
+    width: 35px;
     height: 35px;
+    font-size: 1rem;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .seeker-dashboard .main-content {
+    margin-left: 320px;
   }
   
-  .logout-track span {
-    font-size: 0.7rem;
+  .seeker-dashboard .sideb
+  ar {
+    position: fixed;
+    transform: translateX(0);
   }
   
-  .logout-thumb {
-    width: 25px;
-    height: 25px;
+  .seeker-dashboard .mobile-menu-btn {
+    display: none;
+  }
+  
+  .seeker-dashboard .jobs-list {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+  
+  .seeker-dashboard .dashboard-container {
+    padding-left: 0;
+  }
+}
+
+/* Smooth Animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.seeker-dashboard .job-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.seeker-dashboard .sidebar.sidebar-open {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+/* Accessibility Improvements */
+.seeker-dashboard button:focus,
+.seeker-dashboard input:focus,
+.seeker-dashboard textarea:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.seeker-dashboard .job-card:focus-within {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .seeker-dashboard .dashboard-header,
+  .seeker-dashboard .sidebar,
+  .seeker-dashboard .search-section,
+  .seeker-dashboard .apply-btn,
+  .seeker-dashboard .edit-profile-btn {
+    display: none;
+  }
+  
+  .seeker-dashboard .main-content {
+    margin-left: 0;
+    padding: 0;
+  }
+  
+  .seeker-dashboard .job-card {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Dark Mode Support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+  .seeker-dashboard {
+    background: #1a1a1a;
+    color: #e9ecef;
+  }
+  
+  .seeker-dashboard .sidebar,
+  .seeker-dashboard .jobs-section,
+  .seeker-dashboard .job-card {
+    background: #2c3e50;
+    border-color: #495057;
+  }
+  
+  .seeker-dashboard .search-input,
+  .seeker-dashboard .form-group input,
+  .seeker-dashboard .form-group textarea {
+    background: #495057;
+    border-color: #6c757d;
+    color: #e9ecef;
   }
 }

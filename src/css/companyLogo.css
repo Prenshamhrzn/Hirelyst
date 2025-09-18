@@ -1,0 +1,83 @@
+/* Container for the company info page */
+.company-info-page {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(108, 99, 255, 0.15);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #3a367d;
+}
+
+/* Back button styling */
+.back-btn {
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(108 99 255 / 0.25);
+  transition: background-color 0.3s ease;
+  margin-bottom: 2rem;
+}
+.back-btn:hover {
+  background-color: #574ddb; /* Slightly darker shade */
+}
+
+/* Title */
+.company-info-page h3 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #4b46a9;
+  border-bottom: 2px solid #6c63ff;
+  padding-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+/* List styling */
+.company-info-page ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* Each item */
+.company-info-page ul li {
+  padding: 12px 0;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #e6e6fa;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.15s ease;
+}
+.company-info-page ul li:hover {
+  background-color: #f5f4ff;
+  border-radius: 6px;
+  padding-left: 1rem;
+}
+
+/* Highlighted labels */
+.company-info-page ul li strong {
+  color: #6c63ff;
+  min-width: 140px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+/* Links styling */
+.company-info-page ul li a {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.company-info-page ul li a:hover {
+  color: #483dca;
+  text-decoration: underline;
+}

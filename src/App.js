@@ -13,10 +13,11 @@ import Home from "./components/Home";
 import GetStarted from "./components/GetStarted";
 import BrowseJobs from "./components/BrowseJobs";
 import SearchBar from "./components/SearchBar";
-import SeekerRegistration from "./components/auth/SeekerRegistration";
 import ProviderRegistration from "./components/auth/ProviderRegistration";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import EmployerDashboard from "./components/auth/EmployerDashboard";
+import CompanyInfoPage from "./components/auth/CompanyInfoPage";
+import SeekerRegistration from "./components/auth/SeekerRegistration";
 import SeekerDashboard from "./components/auth/SeekerDashboard";
 import RegisterPage from "./components/auth/RegistserPage";
 
@@ -37,9 +38,15 @@ function App() {
           <Route path="/get-started" element={<GetStarted />} />
           <Route path="/browse-jobs" element={<BrowseJobs />} />
           <Route path="/search-bar" element={<SearchBar />} />
+
+          <Route path="/register/seeker" element={<SeekerRegistration />} />
           <Route path="/seeker-dashboard" element={<SeekerDashboard />} />
-          <Route path="/register/provider-registration" element={<ProviderRegistration />} />
+          <Route
+            path="/register/provider-registration"
+            element={<ProviderRegistration />}
+          />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
+          <Route path="/company-info" element={<CompanyInfoPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

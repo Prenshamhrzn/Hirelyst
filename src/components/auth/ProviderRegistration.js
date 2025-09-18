@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Select, message, Typography, Checkbox } from "antd";
+import { Form, Input, Button, Select, message, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../css/Auth.css";
@@ -8,7 +8,7 @@ const { Option } = Select;
 const { Title, Text } = Typography;
 
 const ProviderRegistration = ({ onComplete, onBack }) => {
-  const [companyRegiterForm] = Form.useForm();
+  const [companyRegisterForm] = Form.useForm();
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -16,27 +16,30 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
       message.error("Passwords do not match.");
       return;
     }
+
     try {
-      const response = await axios.post("http://localhost:5000/api/employers/registerEmployer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/employers/registerEmployer",
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
-        localStorage.setItem("hirelystAccessToken", data.token);
-        message.success("Registration successful!");
-        navigate("/employer-dashboard");
-      } else {
-        message.error(data.message || "Registration failed.");
-      }
+      // ✅ store token with same key used in EmployerDashboard.js
+      localStorage.setItem("token", data.token);
+
+      message.success("Registration successful!");
+      navigate("/employer-dashboard");
     } catch (err) {
-      console.error("Fetch error:", err);
-      message.error("Server error. Please try again later.");
+      console.error("Axios error:", err);
+      const errorMsg =
+        err.response?.data?.message || "Server error. Please try again later.";
+      message.error(errorMsg);
     }
   };
 
@@ -45,7 +48,7 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
       <div className="auth-card">
         <Title level={2}>Company Registration</Title>
         <Form
-          form={companyRegiterForm}
+          form={companyRegisterForm}
           layout="vertical"
           onFinish={onFinish}
           initialValues={{
@@ -56,11 +59,9 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
           <Form.Item
             name="companyName"
             label="Company Name*"
-            rules={[
-              { required: true, message: "please fill the form" },
-            ]}
+            rules={[{ required: true, message: "Company name is required" }]}
           >
-            <Input/>
+            <Input />
           </Form.Item>
 
           <Form.Item
@@ -68,7 +69,7 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             label="Email*"
             rules={[
               { required: true, message: "Email is required" },
-              // { type: "email", message: "Enter a valid email" },
+              { type: "email", message: "Enter a valid email" },
             ]}
           >
             <Input />
@@ -98,7 +99,6 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
               <Option value="Education">Education</Option>
               <Option value="Other">Other</Option>
             </Select>
-    
           </Form.Item>
 
           <Form.Item
@@ -124,7 +124,7 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             label="Password*"
             rules={[
               { required: true, message: "Password is required" },
-              { min: 6, message: "Password must be between 6 -10  characters" },
+              { min: 6, message: "Password must be at least 6 characters" },
             ]}
           >
             <Input.Password />
@@ -153,7 +153,6 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             <Button type="primary" htmlType="submit" block>
               Register Company
             </Button>
-          
           </Form.Item>
 
           <Text>
@@ -161,10 +160,6 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             <a onClick={onBack || (() => navigate("/loginPage"))}>Login</a>
           </Text>
         </Form>
-
-              {/* <Button type="primary" onClick={() => companyRegiterForm.submit()} block>
-              Register Company
-            </Button> */}
       </div>
     </div>
   );
