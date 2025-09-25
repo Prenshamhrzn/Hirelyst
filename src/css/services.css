@@ -1,55 +1,70 @@
 .services {
-    background-color: #f9f9f9; /* Light background for contrast */
-    padding: 40px 20px; /* Padding for spacing */
-    text-align: center; /* Center text */
+  background-color: #f9f9f9; /* light off-white background */
+  padding: 60px 20px;
+  text-align: center;
 }
 
-h2 {
-    font-size: 2.5rem; /* Larger font size for the heading */
-    margin-bottom: 30px; /* Space below the heading */
-    color: #333; /* Dark text color */
+.services h2 {
+  font-size: 2.8rem;
+  margin-bottom: 40px;
+  color: #125d02; /* brand green */
+  font-weight: 700;
 }
 
 .service-list {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    justify-content: center; /* Center items */
-    gap: 20px; /* Space between service items */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
 }
 
 .service-item {
-    background-color: white; /* White background for service items */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    padding: 20px; /* Padding for content */
-    width: 250px; /* Fixed width for service items */
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(18, 93, 2, 0.1); /* subtle green-tinted shadow */
+  padding: 30px 25px;
+  width: 280px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  border: 2px solid transparent;
 }
 
 .service-item:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+  transform: translateY(-7px);
+  box-shadow: 0 14px 30px rgba(18, 93, 2, 0.25);
+  border-color: #0e7c0e; /* stronger green border on hover */
+}
+
+.service-item svg {
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+.service-item:hover svg {
+  color: #0e7c0e !important; /* dark green icon color on hover */
 }
 
 .service-item h3 {
-    margin: 15px 0; /* Space above and below the heading */
-    font-size: 1.5rem; /* Font size for service titles */
-    color: #333; /* Dark text color */
+  margin: 15px 0 10px;
+  font-size: 1.6rem;
+  color: #125d02;
+  font-weight: 600;
 }
 
 .service-item p {
-    color: #666; /* Lighter text color for descriptions */
-    font-size: 1rem; /* Font size for descriptions */
+  color: #4b5320; /* darker muted green for readability */
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .service-list {
-        flex-direction: column; /* Stack items vertically on small screens */
-        align-items: center; /* Center items */
-    }
+  .service-list {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .service-item {
-        width: 90%; /* Full width on small screens */
-    }
+  .service-item {
+    width: 90%;
+  }
 }

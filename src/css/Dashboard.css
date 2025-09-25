@@ -1,0 +1,31 @@
+.dashboard-layout {
+  min-height: 100vh;
+}
+
+.logo {
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.dashboard-header {
+  background: var(--green);
+  color: #fff;
+  font-size: 1.5rem;
+  padding-left: 1rem;
+}
+
+.dashboard-content {
+  padding: 2rem;
+  background: var(--offwhite);
+}
+
+.vacancy-form {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}

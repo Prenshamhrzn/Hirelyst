@@ -1,52 +1,111 @@
-/* Header */
-.header-container{
-  border-bottom: 1px #003366 ;
+/* Header Wrapper */
+.header-container {
+  background-color: #fdfdfd;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
+
+/* Header Content */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  width: 90%;
-  margin: auto;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
 }
 
+/* Logo */
 .logo {
-  font-size: 30px;
-  font-weight: 700;
-  color: #003366 ;
-}
-.img_logo{
-  flex: 1;
-  max-width: 50%;
-  text-align: left;
-
-}
-.img_logo img{
-   
-  max-width: 100%;
-  height: auto;
-
-}
-
-.nav{
   display: flex;
   align-items: center;
-  gap: 40px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0e7c0e;
 }
+
+.logo-text {
+  margin-left: 8px;
+  color: #0e7c0e;
+  font-size: 1.4rem;
+}
+
+/* Navigation Links */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
 .nav a {
-  margin: 10 10px;
   text-decoration: none;
-  color: #1e2a3a;
+  color: #125d02;
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 1.05rem;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #0e7c0e;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* Buttons */
+.login-btn,
+.register-btn {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 }
 
 .login-btn {
-  background-color: #ff793f;
-  color: #fff;
-  padding: 8px 18px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
+  background-color: transparent;
+  border: 1.5px solid #0e7c0e;
+  color: #0e7c0e;
+}
+
+.login-btn:hover {
+  background-color: #0e7c0e;
+  color: white;
+}
+
+.register-btn {
+  background-color: #0e7c0e;
+  color: white;
+  border: none;
+}
+
+.register-btn:hover {
+  background-color: #0c5a0c;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .auth-buttons {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
 }

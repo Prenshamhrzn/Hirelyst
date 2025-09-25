@@ -3,37 +3,51 @@ import { FcBusinessman } from "react-icons/fc";
 import { IoNotificationsCircle } from "react-icons/io5";
 import { HiOutlineSaveAs } from "react-icons/hi";
 import { FaGlobeAmericas } from "react-icons/fa";
-function Features(){
-    return(
-        <div>
-                <section class="features">
-      <h2>Features</h2>
-      <div class="feature-list">
-        <div class="feature-item">
-            <FcBusinessman size={50} />
-          <h3>Business Matching</h3>
-          <p>Our system connects students and graduates with the right opportunities</p>
-        </div>
-        <div class="feature-item">
-          <IoNotificationsCircle size={50} color="blue"/>
-            <h3>Email Alerts</h3>
-            <p>Get notified about new matching opportunities</p>
-        </div>
+
+function Features() {
+  return (
+    <section className="features">
+      <h2>Platform Features</h2>
+      <div className="feature-list">
         <div className="feature-item">
-            <HiOutlineSaveAs size={50} color="darkblue" />
-            <h3>Save Jobs</h3>
-            <p>Bookmark jobs you want to apply for later</p>
+          <div className="icon">
+            <FcBusinessman size={50} />
           </div>
-        <div class="feature-item">
-            <FaGlobeAmericas size={50} color="green"/>
+          <h3>Business Matching</h3>
+          <p>
+            Connect with ideal internships and job roles tailored to your
+            profile.
+          </p>
+        </div>
+
+        <div className="feature-item">
+          <div className="icon">
+            <IoNotificationsCircle size={50} color="#0e7c0e" />
+          </div>
+          <h3>Email Alerts</h3>
+          <p>
+            Get real-time alerts for new opportunities that match your goals.
+          </p>
+        </div>
+
+        <div className="feature-item">
+          <div className="icon">
+            <HiOutlineSaveAs size={50} color="#125d02" />
+          </div>
+          <h3>Save Jobs</h3>
+          <p>Bookmark job listings and apply when you're ready.</p>
+        </div>
+
+        <div className="feature-item">
+          <div className="icon">
+            <FaGlobeAmericas size={50} color="#0e7c0e" />
+          </div>
           <h3>Global Reach</h3>
-          <p>Remote and on-site jobs from top companies</p>
-          {/* <img src="https://via.placeholder.com/48" alt="Globe Icon" /> */}
+          <p>Discover remote or on-site roles from trusted global companies.</p>
         </div>
       </div>
     </section>
-        </div>
-    )
+  );
 }
 
-export default Features
+export default Features;

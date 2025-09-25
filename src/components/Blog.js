@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
-=======
-//Blog.js
-import { useState } from "react";
->>>>>>> 64b6be3302c08cd93a61b2bb03753eadae6011a5
+
 import "../css/blog.css";
 import axios from "axios";
 
@@ -29,12 +25,10 @@ const BlogPost = ({ post, isExpanded, onToggle }) => (
 );
 
 function Blog() {
-<<<<<<< HEAD
   const [blogs, setBlogs] = useState([]);
   const [expandedPost, setExpandedPost] = useState(null);
-=======
+
   const [expandedPosts, setExpandedPosts] = useState(new Set());
->>>>>>> 64b6be3302c08cd93a61b2bb03753eadae6011a5
 
   const toggleExpand = (index) => {
     const newSet = new Set(expandedPosts);
@@ -46,67 +40,73 @@ function Blog() {
     setExpandedPosts(newSet);
   };
 
-<<<<<<< HEAD
-  // Fetch blogs from backend
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await axios.get(
-          "http://192.168.1.68:5000/api/blogs/getBlogs"
-        ); // your backend URL
-        const data = await response.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
-=======
   const blogPosts = [
     {
       title: "5 Tips to Get Your First Internship",
       date: "June 1, 2025",
-      preview: "Starting your career journey can feel overwhelming. This post guides you through building your resume...",
+      preview:
+        "Starting your career journey can feel overwhelming. This post guides you through building your resume...",
       full: (
         <>
-          <p>Starting your career journey can feel overwhelming. This post guides you through five essential steps:</p>
+          <p>
+            Starting your career journey can feel overwhelming. This post guides
+            you through five essential steps:
+          </p>
           <ul>
             <li>Build a clear and concise resume.</li>
-            <li>Leverage platforms like Hirelyst to discover internship opportunities tailored to your skills.</li>
+            <li>
+              Leverage platforms like Hirelyst to discover internship
+              opportunities tailored to your skills.
+            </li>
             <li>Prepare for behavioral and technical interviews.</li>
             <li>Network with peers and mentors.</li>
             <li>Stay consistent and never stop learning.</li>
           </ul>
-          <p>Whether you're a college student or a recent graduate, these tips can increase your chances of securing your first role.</p>
+          <p>
+            Whether you're a college student or a recent graduate, these tips
+            can increase your chances of securing your first role.
+          </p>
         </>
       ),
     },
     {
       title: "Why Personalized Job Recommendations Matter",
       date: "May 25, 2025",
-      preview: "Hirelyst helps you discover internships and jobs that suit your profile...",
+      preview:
+        "Hirelyst helps you discover internships and jobs that suit your profile...",
       full: (
         <>
-          <p>Hirelyst helps you discover internships and jobs that suit your profile, thanks to its personalized recommendation engine. Instead of wasting time scrolling endlessly, you’re matched with opportunities based on:</p>
+          <p>
+            Hirelyst helps you discover internships and jobs that suit your
+            profile, thanks to its personalized recommendation engine. Instead
+            of wasting time scrolling endlessly, you’re matched with
+            opportunities based on:
+          </p>
           <ul>
             <li>Your skillset</li>
             <li>Your interests</li>
             <li>Your educational background</li>
             <li>Previous search behavior</li>
           </ul>
-          <p>This means fewer irrelevant listings and more time applying to roles that truly fit you.</p>
+          <p>
+            This means fewer irrelevant listings and more time applying to roles
+            that truly fit you.
+          </p>
         </>
       ),
     },
     {
       title: "Top 10 Skills Employers Look for in Freshers",
       date: "May 15, 2025",
-      preview: "Want to stand out in job applications? This blog highlights the top skills freshers need...",
+      preview:
+        "Want to stand out in job applications? This blog highlights the top skills freshers need...",
       full: (
         <>
-          <p>To land a job or internship as a fresher, you need more than just a degree. This post highlights the top 10 skills employers are looking for:</p>
+          <p>
+            To land a job or internship as a fresher, you need more than just a
+            degree. This post highlights the top 10 skills employers are looking
+            for:
+          </p>
           <ul>
             <li>Communication (verbal & written)</li>
             <li>Adaptability</li>
@@ -119,19 +119,22 @@ function Blog() {
             <li>Creativity and innovation</li>
             <li>Basic project management</li>
           </ul>
-          <p>We also explain how you can develop and showcase these skills on platforms like Hirelyst to strengthen your profile.</p>
+          <p>
+            We also explain how you can develop and showcase these skills on
+            platforms like Hirelyst to strengthen your profile.
+          </p>
         </>
       ),
     },
   ];
->>>>>>> 64b6be3302c08cd93a61b2bb03753eadae6011a5
 
   return (
     <section className="blog">
       <div className="blog-header">
         <h1>Blog</h1>
         <p>
-          Explore career insights, application tips, and platform features—designed for students and fresh graduates.
+          Explore career insights, application tips, and platform
+          features—designed for students and fresh graduates.
         </p>
       </div>
 

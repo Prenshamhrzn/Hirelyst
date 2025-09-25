@@ -1,243 +1,101 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Input, Button, Select, message } from "antd";
-import "../../css/EmployerDashboard.css";
+import React, { useState } from "react";
+import { Layout, Menu, Form, Input, Button, Table, message } from "antd";
+import {
+  PlusOutlined,
+  HomeOutlined,
+  FileTextOutlined,
+} from "@ant-design/icons";
 import axios from "axios";
+import "../../css/Dashboard.css";
 
-const { TextArea } = Input;
+const { Header, Sider, Content } = Layout;
 
 const EmployerDashboard = () => {
-  const [companyInfo, setCompanyInfo] = useState(null);
+  const [collapsed, setCollapsed] = useState(false);
   const [vacancies, setVacancies] = useState([]);
-  const [showForm, setShowForm] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard");
-  const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token || token === "undefined" || token === null) {
-      navigate("/loginPage");
-    } else {
-      fetchCompanyInfo();
-    }
-  }, [navigate]);
-
-  const fetchCompanyInfo = async () => {
+  const onAddVacancy = async (values) => {
     try {
-      const response = await fetch("http://localhost:5000/api/employers/me", {
-        method: "GET",
+      // Send to admin endpoint
+      await axios.post("http://localhost:5000/api/vacancies", values, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setCompanyInfo(data);
-        setVacancies(data.vacancies || []);
-      } else {
-        console.error("Failed to fetch company info");
-      }
-    } catch (error) {
-      console.error("Error fetching company info:", error);
+      setVacancies([...vacancies, values]);
+      message.success("Vacancy submitted to admin for approval!");
+      form.resetFields();
+    } catch (err) {
+      message.error("Error posting vacancy.");
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/loginPage");
-  };
-
-  const onFinish = async (values) => {
-    try {
-      // API call to add vacancy
-      const response = await axios.post(
-        "http://192.168.1.68:5000/api/jobs/addJob",
-        values
-      );
-
-      if (response.status === 200 || response.status === 201) {
-        message.success("Vacancy posted successfully!");
-        const newVacancy = {
-          ...values,
-          id: Date.now(),
-          status: "Pending",
-          datePosted: new Date().toLocaleDateString(),
-        };
-        setVacancies([...vacancies, newVacancy]);
-        setShowForm(false);
-      } else {
-        message.error("Failed to post vacancy");
-      }
-    } catch (error) {
-      console.error("Error posting vacancy:", error);
-      message.error("Error posting vacancy");
-    }
-  };
+  const columns = [
+    { title: "Job Title", dataIndex: "title" },
+    { title: "Location", dataIndex: "location" },
+    { title: "Salary", dataIndex: "salary" },
+    { title: "Status", dataIndex: "status", render: () => "Pending Approval" },
+  ];
 
   return (
-    <div className="employer-dashboard-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>Employer Panel</h2>
-        <ul className="sidebar-menu">
-          <li
-            className={activeTab === "dashboard" ? "active" : ""}
-            onClick={() => setActiveTab("dashboard")}
+    <Layout className="dashboard-layout">
+      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+        <div className="logo">Hirelyst</div>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1" icon={<HomeOutlined />}>
+            Overview
+          </Menu.Item>
+          <Menu.Item key="2" icon={<FileTextOutlined />}>
+            Vacancies
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header className="dashboard-header">Employer Dashboard</Header>
+        <Content className="dashboard-content">
+          <h2 className="green-text">Post a New Vacancy</h2>
+          <Form
+            form={form}
+            layout="vertical"
+            className="vacancy-form"
+            onFinish={onAddVacancy}
           >
-            🏠 Dashboard
-          </li>
-          <li
-            className={activeTab === "vacancies" ? "active" : ""}
-            onClick={() => setActiveTab("vacancies")}
-          >
-            📢 Job Vacancies
-          </li>
-          <li onClick={() => alert("Applicants feature coming soon!")}>
-            👥 Applicants
-          </li>
-          <li onClick={handleLogout}>🚪 Logout</li>
-        </ul>
-      </aside>
+            <Form.Item
+              name="title"
+              label="Job Title"
+              rules={[{ required: true, message: "Job Title required" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="location"
+              label="Location"
+              rules={[{ required: true, message: "Location required" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name="salary" label="Salary">
+              <Input />
+            </Form.Item>
+            <Form.Item name="description" label="Description">
+              <Input.TextArea rows={4} />
+            </Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              icon={<PlusOutlined />}
+              className="green-btn"
+            >
+              Submit to Admin
+            </Button>
+          </Form>
 
-      {/* Main Content */}
-      <main className="dashboard-content">
-        {/* Company logo top right */}
-        <div
-          className="company-logo-topright"
-          onClick={() => navigate("/company-info")}
-          title="View Company Info"
-        >
-          <div className="logo-circle">
-            {companyInfo && companyInfo.companyName
-              ? companyInfo.companyName[0].toUpperCase()
-              : "🏢"}
-          </div>
-        </div>
-
-        {/* Dashboard Tab */}
-        {activeTab === "dashboard" && (
-          <div className="dashboard-tab">
-            <h2>👋 Welcome to Your Dashboard</h2>
-            {!companyInfo && (
-              <p className="loading">⏳ Loading company information...</p>
-            )}
-          </div>
-        )}
-
-        {/* Vacancies Tab */}
-        {activeTab === "vacancies" && (
-          <div className="vacancies-section">
-            <div className="section-header">
-              <h2>📢 Job Vacancies</h2>
-              <Button onClick={() => setShowForm(!showForm)}>
-                {showForm ? "Cancel" : "Post New Vacancy"}
-              </Button>
-            </div>
-
-            {showForm && (
-              <Form
-                layout="vertical"
-                onFinish={onFinish}
-                className="vacancy-form"
-              >
-                <Form.Item
-                  label="Job Title"
-                  name="title"
-                  rules={[
-                    { required: true, message: "Please enter job title" },
-                  ]}
-                >
-                  <Input placeholder="Job Title" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Job Description"
-                  name="description"
-                  rules={[
-                    { required: true, message: "Please enter job description" },
-                  ]}
-                >
-                  <TextArea rows={4} placeholder="Job Description" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Requirements"
-                  name="requirements"
-                  rules={[
-                    { required: true, message: "Please enter requirements" },
-                  ]}
-                >
-                  <TextArea rows={3} placeholder="Requirements" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Location"
-                  name="location"
-                  rules={[{ required: true, message: "Please enter location" }]}
-                >
-                  <Input placeholder="Location" />
-                </Form.Item>
-
-                <Form.Item label="Job Type" name="type">
-                  <Select defaultValue="Full-time">
-                    <Select.Option value="Full-time">Full-time</Select.Option>
-                    <Select.Option value="Part-time">Part-time</Select.Option>
-                    <Select.Option value="Contract">Contract</Select.Option>
-                    <Select.Option value="Internship">Internship</Select.Option>
-                  </Select>
-                </Form.Item>
-
-                <Form.Item label="Salary Range" name="salary">
-                  <Input placeholder="e.g. $50,000 - $70,000" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Submit for Approval
-                  </Button>
-                </Form.Item>
-              </Form>
-            )}
-
-            <div className="vacancies-list">
-              {vacancies.length > 0 ? (
-                vacancies.map((vacancy) => (
-                  <div key={vacancy.id} className="vacancy-card">
-                    <h3>
-                      {vacancy.title}{" "}
-                      <span
-                        className={`status-badge ${vacancy.status
-                          .replace(" ", "-")
-                          .toLowerCase()}`}
-                      >
-                        {vacancy.status}
-                      </span>
-                    </h3>
-                    <p>
-                      <strong>Location:</strong> {vacancy.location}
-                    </p>
-                    <p>
-                      <strong>Type:</strong> {vacancy.type}
-                    </p>
-                    <p>
-                      <strong>Posted:</strong> {vacancy.datePosted}
-                    </p>
-                    <div className="vacancy-actions">
-                      <Button className="view-btn">View</Button>
-                      <Button className="edit-btn">Edit</Button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p>No vacancies posted yet.</p>
-              )}
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
+          <h2 className="green-text mt-6">Your Vacancies</h2>
+          <Table columns={columns} dataSource={vacancies} rowKey="title" />
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 

@@ -1,6 +1,11 @@
 import "../css/Aboutus.css";
-import aboutImage from "./abouut.png";
-import { FaRocket, FaUserTie, FaSearch, FaChartLine } from "react-icons/fa";
+import realScenarioImage from "./real-about.jpg"; // Replace with an actual image of jobseekers/interviews
+import {
+  FaRocket,
+  FaUserGraduate,
+  FaBuilding,
+  FaLightbulb,
+} from "react-icons/fa";
 
 function Aboutus() {
   return (
@@ -10,26 +15,29 @@ function Aboutus() {
           About <span>Hirelyst</span>
         </h1>
         <p className="about-subtitle">
-          Bridging Talent with Opportunity in Nepal
+          Empowering Nepal's Youth — Connecting Talent to Opportunity
         </p>
       </div>
 
       <div className="about-container">
-        {/* Left side: Image */}
+        {/* Left Side: Image */}
         <div className="about-image-section">
-          <img src={aboutImage} alt="About Hirelyst" className="about-image" />
+          <img
+            src={realScenarioImage}
+            alt="Real Job Scenario in Nepal"
+            className="about-image"
+          />
           <div className="image-overlay"></div>
         </div>
 
-        {/* Right side: Text */}
+        {/* Right Side: Text */}
         <div className="about-text-section">
           <div className="about-intro">
             <p className="about-text">
-              Welcome to <strong>Hirelyst</strong>, Nepal's premier job and
-              internship platform designed specifically for students and fresh
-              graduates. We're revolutionizing the way young talent connects
-              with career opportunities through our intelligent, user-centric
-              platform.
+              <strong>Hirelyst</strong> is Nepal's trusted platform for students
+              and fresh graduates to discover jobs and internships. With a clean
+              interface and smart tools, we connect you to career opportunities
+              that truly match your potential.
             </p>
           </div>
 
@@ -38,51 +46,53 @@ function Aboutus() {
               <div className="feature-icon">
                 <FaRocket />
               </div>
-              <h3>Smart Recommendations</h3>
+              <h3>Smart Matching</h3>
               <p>
-                Our hybrid engine suggests perfect matches based on your profile
-                and activity.
+                Our algorithm recommends tailored opportunities that align with
+                your interests and skills.
               </p>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <FaUserTie />
+                <FaUserGraduate />
               </div>
-              <h3>For Job Seekers</h3>
+              <h3>Student-Focused</h3>
               <p>
-                Create profiles, select interests, and track applications
-                effortlessly.
+                We design for students — intuitive profiles, academic-friendly
+                filters, and growth-oriented listings.
               </p>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <FaSearch />
+                <FaBuilding />
               </div>
-              <h3>For Employers</h3>
+              <h3>Employer Tools</h3>
               <p>
-                Post jobs, review applicants, and hire efficiently with our
-                tools.
+                Employers get streamlined posting, applicant tracking, and
+                AI-powered sorting features.
               </p>
             </div>
 
             <div className="feature-card">
               <div className="feature-icon">
-                <FaChartLine />
+                <FaLightbulb />
               </div>
-              <h3>Continuous Improvement</h3>
-              <p>Our system learns and provides better matches over time.</p>
+              <h3>Adaptive Learning</h3>
+              <p>
+                Our system continuously evolves to suggest better matches as you
+                interact more.
+              </p>
             </div>
           </div>
 
           <div className="about-cta">
             <p className="about-text">
-              With a clean, intuitive interface and features tailored for the
-              Nepalese market, Hirelyst is your trusted partner in launching a
-              successful career.
+              Whether you're just beginning your journey or hiring your next
+              star — Hirelyst is your partner in progress.
             </p>
-            <button className="cta-button">Join Hirelyst Today</button>
+            <button className="cta-button">Get Started with Hirelyst</button>
           </div>
         </div>
       </div>

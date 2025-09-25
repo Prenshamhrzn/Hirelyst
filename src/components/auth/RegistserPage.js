@@ -6,14 +6,10 @@ import "../../css/Auth.css";
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const handleSelect = (userType) => {
-    if (userType === "seeker") {
-      navigate("/register/seeker");
-    } else if (userType === "provider") {
-      navigate("/register/provider-registration");
-    } else if (userType === "admin") {
-      navigate("/admin-login");
-    }
+  const handleSelect = (type) => {
+    if (type === "seeker") navigate("/register/seeker");
+    if (type === "provider") navigate("/register/provider-registration");
+    if (type === "admin") navigate("/admin-login");
   };
 
   return (
@@ -21,7 +17,7 @@ const RegisterPage = () => {
       <div className="auth-glass-container">
         <div className="auth-header">
           <h2>
-            Join <span className="brand-gradient">Hirelyst</span>
+            Join <span className="green-text">Hirelyst</span>
           </h2>
           <p>Select your role to continue</p>
         </div>
@@ -47,7 +43,7 @@ const RegisterPage = () => {
         <div className="auth-footer">
           <p>
             Already have an account?{" "}
-            <span className="text-link" onClick={() => navigate("/loginPage")}>
+            <span className="green-link" onClick={() => navigate("/loginPage")}>
               Login here
             </span>
           </p>

@@ -7,8 +7,8 @@ import "../../css/Auth.css";
 const { Option } = Select;
 const { Title, Text } = Typography;
 
-const ProviderRegistration = ({ onComplete, onBack }) => {
-  const [companyRegisterForm] = Form.useForm();
+const ProviderRegistration = () => {
+  const [form] = Form.useForm();
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
@@ -18,50 +18,42 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
     }
 
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:5000/api/employers/registerEmployer",
         values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        { headers: { "Content-Type": "application/json" } }
       );
 
-      const data = response.data;
-
-      // ✅ store token with same key used in EmployerDashboard.js
+      // Store token for dashboard access
       localStorage.setItem("token", data.token);
-
       message.success("Registration successful!");
       navigate("/employer-dashboard");
     } catch (err) {
-      console.error("Axios error:", err);
-      const errorMsg =
-        err.response?.data?.message || "Server error. Please try again later.";
-      message.error(errorMsg);
+      console.error(err);
+      message.error(
+        err.response?.data?.message || "Server error. Please try again."
+      );
     }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <Title level={2}>Company Registration</Title>
+        <Title level={2} className="green-text">
+          Company Registration
+        </Title>
         <Form
-          form={companyRegisterForm}
+          form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{
-            industry: "",
-            companySize: "",
-          }}
+          initialValues={{ industry: "", companySize: "" }}
         >
           <Form.Item
             name="companyName"
             label="Company Name*"
             rules={[{ required: true, message: "Company name is required" }]}
           >
-            <Input />
+            <Input placeholder="e.g. Hivecraft Technology" />
           </Form.Item>
 
           <Form.Item
@@ -72,7 +64,7 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
               { type: "email", message: "Enter a valid email" },
             ]}
           >
-            <Input />
+            <Input placeholder="company@example.com" />
           </Form.Item>
 
           <Form.Item
@@ -80,11 +72,11 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             label="Contact Person*"
             rules={[{ required: true, message: "Contact person is required" }]}
           >
-            <Input />
+            <Input placeholder="Name of HR/Manager" />
           </Form.Item>
 
           <Form.Item name="phone" label="Phone Number">
-            <Input />
+            <Input placeholder="+977-98XXXXXXXX" />
           </Form.Item>
 
           <Form.Item
@@ -93,11 +85,17 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             rules={[{ required: true, message: "Industry is required" }]}
           >
             <Select placeholder="Select Industry" showSearch>
-              <Option value="Technology">Technology</Option>
-              <Option value="Finance">Finance</Option>
-              <Option value="Healthcare">Healthcare</Option>
-              <Option value="Education">Education</Option>
-              <Option value="Other">Other</Option>
+              {[
+                "Technology",
+                "Finance",
+                "Healthcare",
+                "Education",
+                "Other",
+              ].map((item) => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -107,11 +105,11 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             rules={[{ required: true, message: "Company size is required" }]}
           >
             <Select placeholder="Select Company Size" showSearch>
-              <Option value="1-10">1-10 employees</Option>
-              <Option value="11-50">11-50 employees</Option>
-              <Option value="51-200">51-200 employees</Option>
-              <Option value="201-500">201-500 employees</Option>
-              <Option value="501+">501+ employees</Option>
+              {["1-10", "11-50", "51-200", "201-500", "501+"].map((size) => (
+                <Option key={size} value={size}>
+                  {size} employees
+                </Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -127,7 +125,7 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
               { min: 6, message: "Password must be at least 6 characters" },
             ]}
           >
-            <Input.Password />
+            <Input.Password placeholder="Create a password" />
           </Form.Item>
 
           <Form.Item
@@ -136,28 +134,27 @@ const ProviderRegistration = ({ onComplete, onBack }) => {
             dependencies={["password"]}
             rules={[
               { required: true, message: "Please confirm your password" },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error("Passwords do not match"));
-                },
-              }),
             ]}
           >
-            <Input.Password />
+            <Input.Password placeholder="Re-enter password" />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              className="green-btn"
+            >
               Register Company
             </Button>
           </Form.Item>
 
           <Text>
             Already have an account?{" "}
-            <a onClick={onBack || (() => navigate("/loginPage"))}>Login</a>
+            <a className="green-link" onClick={() => navigate("/loginPage")}>
+              Login
+            </a>
           </Text>
         </Form>
       </div>

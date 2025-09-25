@@ -1,49 +1,80 @@
+/* Root Contact Section */
 .contact-section {
   padding: 40px 20px;
-  background: #f9f9f9;
-  font-family: 'Segoe UI', sans-serif ;
-   border-bottom: 2px solid gray;
+  background: #fdfdf9; /* softer off-white */
+  font-family: 'Segoe UI', sans-serif;
+  border-bottom: 2px solid #ccc;
+  color:#125d02 /* slightly dark green */
 }
 
+/* Contact Content Box */
 .contact-content {
   max-width: 700px;
   margin: auto;
-  background: #fff;
+  background: #ffffff;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
 }
 
+/* Heading */
 .contact-content h2 {
   text-align: center;
-  margin-bottom: 10px;
-  color: #2c3e50;
+  margin-bottom: 16px;
+  color: #125d02; /* dark green */
+  font-size: 2rem;
 }
 
-.contact-content p {
+/* Subtext */
+.contact-content > p {
   text-align: center;
-  color: #555;
-  margin-bottom: 20px;
+  color: #3d5f54; /* muted dark green */
+  margin-bottom: 25px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Contact Details */
+.contact-details {
+  margin-bottom: 30px;
 }
 
 .contact-details p {
   margin: 10px 0;
-  color: #444;
+  color: #2f5d50;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
 }
 
+.contact-details svg {
+  margin-right: 10px;
+  color: #255142;
+}
+
+/* Contact Form */
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 25px;
 }
 
 .contact-form input,
 .contact-form textarea {
-  padding: 12px;
-  border: 1px solid #ddd;
+  padding: 12px 15px;
+  border: 1px solid #c3d5c0;
   border-radius: 8px;
   font-size: 16px;
+  background-color: #fff;
+  color: #2f5d50;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #2f5d50;
+  box-shadow: 0 0 6px rgba(47, 93, 80, 0.2);
 }
 
 .contact-form textarea {
@@ -51,21 +82,40 @@
   height: 120px;
 }
 
+/* Button */
 .contact-form button {
-  background-color: #2c3e50;
+  background-color: #2f5d50;
   color: white;
   border: none;
   padding: 12px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .contact-form button:hover {
-  background-color: #1a252f;
+  background-color: #254c40;
+  transform: translateY(-2px);
 }
 
+/* Responsive Design */
+@media (max-width: 600px) {
+  .contact-content {
+    padding: 20px;
+  }
 
+  .contact-content h2 {
+    font-size: 1.6rem;
+  }
 
+  .contact-details p {
+    font-size: 0.95rem;
+  }
 
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form button {
+    font-size: 15px;
+  }
+}
