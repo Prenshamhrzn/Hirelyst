@@ -15,12 +15,12 @@ function Banner() {
         <div className="banner-grid">
           {/* LEFT: Search + Text */}
           <div className="banner-text">
-            <div className="left-search">
+            {/* <div className="left-search">
               <SearchBar
                 onSearch={(query) => console.log("Search query:", query)}
                 compact={true}
               />
-            </div>
+            </div> */}
 
             {/* <div className="banner-badge">
               <span>Smart Job Matching</span>

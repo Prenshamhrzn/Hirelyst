@@ -30,70 +30,91 @@ const SeekerDashboard = ({ jobsData = [] }) => {
     education: "",
   });
   const [tempProfile, setTempProfile] = useState(profile);
-  // Fetch jobs from backend
+
+  // Fetch seeker profile from backend or localStorage
+  const fetchSeekerProfile = async () => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("seekerUser"));
+
+      if (storedUser && storedUser._id) {
+        const res = await axios.get(
+          `http://192.168.1.43:5000/api/seekers/${storedUser._id}`
+        );
+        setProfile(res.data);
+        setTempProfile(res.data);
+      } else {
+        console.log("No user logged in, using guest profile");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
+  // Fetch all jobs
   const fetchAllJobs = async () => {
     try {
-      const res = await axios.get("http://192.168.1.68:5000/api/jobs/getJobs");
-
+      const res = await axios.get("http://192.168.1.28:5000/api/jobs/getJobs");
+      setJobs(res.data);
       setFilteredJobs(res.data);
     } catch (error) {
       console.log("Error fetching jobs:", error);
     }
   };
 
-  // Initialize jobs from props
   useEffect(() => {
+    fetchSeekerProfile();
     fetchAllJobs();
   }, []);
 
-  // Filter jobs based on search query
+  // Search filter logic
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    if (!searchQuery.trim()) {
       setFilteredJobs(jobs);
     } else {
+      const query = searchQuery.toLowerCase();
       const filtered = jobs.filter(
         (job) =>
-          job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.qualifications.some((qual) =>
-            qual.toLowerCase().includes(searchQuery.toLowerCase())
-          )
+          job.title.toLowerCase().includes(query) ||
+          job.category.toLowerCase().includes(query) ||
+          job.location.toLowerCase().includes(query) ||
+          job.qualifications.some((qual) => qual.toLowerCase().includes(query))
       );
       setFilteredJobs(filtered);
     }
   }, [searchQuery, jobs]);
 
-  // Format date
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
+  // Utility functions
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
-  };
 
-  // Calculate days until expiry
   const getDaysUntilExpiry = (dateString) => {
     const today = new Date();
     const expiryDate = new Date(dateString);
-    const diffTime = expiryDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    const diff = expiryDate - today;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
 
-  // Format salary
   const formatSalary = (salary) => {
     const num = parseInt(salary);
-    if (num >= 100000) {
-      return `$${(num / 1000).toFixed(0)}k`;
-    }
+    if (num >= 100000) return `$${(num / 1000).toFixed(0)}k`;
     return `$${num.toLocaleString()}`;
   };
 
-  const handleProfileUpdate = () => {
-    setProfile(tempProfile);
-    setEditMode(false);
+  const handleProfileUpdate = async () => {
+    try {
+      await axios.put(
+        `http://192.168.1.43:5000/api/seekers/update/${profile._id}`,
+        tempProfile
+      );
+      setProfile(tempProfile);
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   const handleCancelEdit = () => {
@@ -102,10 +123,12 @@ const SeekerDashboard = ({ jobsData = [] }) => {
   };
 
   const handleApplyJob = (jobId) => {
-    // try{
-    //   await axios.post()
-    // }
     alert(`Applied to job: ${jobId}`);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("seekerUser");
+    window.location.href = "/login";
   };
 
   return (
@@ -133,14 +156,13 @@ const SeekerDashboard = ({ jobsData = [] }) => {
           <div className="profile-icon">
             <FiUser />
           </div>
-          <button className="logout-btn">
+          <button className="logout-btn" onClick={handleLogout}>
             <FiLogOut /> Logout
           </button>
         </div>
       </header>
 
       <div className="dashboard-container">
-        {/* Sidebar Overlay */}
         {sidebarOpen && (
           <div
             className="sidebar-overlay"
@@ -160,67 +182,30 @@ const SeekerDashboard = ({ jobsData = [] }) => {
           <div className="profile-section-sidebar">
             <div className="profile-header">
               <FiUser className="profile-icon-large" />
-              <h3>Profile</h3>
+              <h3>Your Profile</h3>
             </div>
 
             {editMode ? (
               <div className="profile-edit-form">
-                <div className="form-group">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    value={tempProfile.name}
-                    onChange={(e) =>
-                      setTempProfile({ ...tempProfile, name: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    value={tempProfile.email}
-                    onChange={(e) =>
-                      setTempProfile({ ...tempProfile, email: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Skills</label>
-                  <textarea
-                    value={tempProfile.skills}
-                    onChange={(e) =>
-                      setTempProfile({ ...tempProfile, skills: e.target.value })
-                    }
-                    rows="2"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Experience</label>
-                  <input
-                    type="text"
-                    value={tempProfile.experience}
-                    onChange={(e) =>
-                      setTempProfile({
-                        ...tempProfile,
-                        experience: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Education</label>
-                  <input
-                    type="text"
-                    value={tempProfile.education}
-                    onChange={(e) =>
-                      setTempProfile({
-                        ...tempProfile,
-                        education: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+                {["name", "email", "skills", "experience", "education"].map(
+                  (field) => (
+                    <div className="form-group" key={field}>
+                      <label>
+                        {field.charAt(0).toUpperCase() + field.slice(1)}
+                      </label>
+                      <input
+                        type="text"
+                        value={tempProfile[field] || ""}
+                        onChange={(e) =>
+                          setTempProfile({
+                            ...tempProfile,
+                            [field]: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  )
+                )}
                 <div className="form-buttons">
                   <button onClick={handleProfileUpdate} className="save-btn">
                     <FiSave /> Save
@@ -279,13 +264,12 @@ const SeekerDashboard = ({ jobsData = [] }) => {
 
         {/* Main Content */}
         <main className="main-content">
-          {/* Search Section */}
           <div className="search-section">
             <div className="search-container">
               <FiSearch className="search-icon" />
               <input
                 type="text"
-                placeholder="Search jobs by title, category, location..."
+                placeholder="Search jobs by title, category, or location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input"
@@ -293,7 +277,6 @@ const SeekerDashboard = ({ jobsData = [] }) => {
             </div>
           </div>
 
-          {/* Jobs Section */}
           <section className="jobs-section">
             <div className="section-header">
               <h2>
@@ -314,7 +297,6 @@ const SeekerDashboard = ({ jobsData = [] }) => {
                       <h4 className="job-title">{job.title}</h4>
                       <span className="job-category">{job.category}</span>
                     </div>
-
                     <div className="job-details">
                       <div className="detail-item">
                         <FiMapPin className="detail-icon" />
@@ -322,9 +304,7 @@ const SeekerDashboard = ({ jobsData = [] }) => {
                       </div>
                       <div className="detail-item">
                         <FiDollarSign className="detail-icon" />
-                        <span className="salary">
-                          {formatSalary(job.salary)}
-                        </span>
+                        <span>{formatSalary(job.salary)}</span>
                       </div>
                       <div className="detail-item">
                         <FiCalendar className="detail-icon" />
@@ -336,18 +316,20 @@ const SeekerDashboard = ({ jobsData = [] }) => {
                       </div>
                     </div>
 
-                    {job.qualifications && job.qualifications.length > 0 && (
-                      <div className="qualifications">
-                        <strong>Required Qualifications:</strong>
-                        <div className="qualifications-list">
-                          {job.qualifications.map((qual, index) => (
-                            <span key={index} className="qualification-tag">
-                              {qual}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    <div className="qualifications">
+                      {job.qualifications?.length > 0 && (
+                        <>
+                          <strong>Required Qualifications:</strong>
+                          <div className="qualifications-list">
+                            {job.qualifications.map((qual, index) => (
+                              <span key={index} className="qualification-tag">
+                                {qual}
+                              </span>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
 
                     <div className="job-status">
                       {getDaysUntilExpiry(job.expiry_date) > 0 ? (
@@ -387,7 +369,7 @@ const SeekerDashboard = ({ jobsData = [] }) => {
                   <p>
                     {searchQuery
                       ? "Try adjusting your search criteria"
-                      : "No job listings available at the moment"}
+                      : "No job listings available right now"}
                   </p>
                 </div>
               )}

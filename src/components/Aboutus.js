@@ -1,36 +1,21 @@
 import "../css/Aboutus.css";
-import realScenarioImage from "./real-about.jpg"; // Replace with an actual image of jobseekers/interviews
-import {
-  FaRocket,
-  FaUserGraduate,
-  FaBuilding,
-  FaLightbulb,
-} from "react-icons/fa";
+import { FaUserGraduate, FaBuilding, FaHandsHelping } from "react-icons/fa";
 
 function Aboutus() {
   return (
-    <div className="about-wrapper">
-      <div className="about-header">
+    <section className="about-wrapper">
+      {/* Header */}
+      <header className="about-header">
         <h1 className="about-title">
           About <span>Hirelyst</span>
         </h1>
         <p className="about-subtitle">
           Empowering Nepal's Youth — Connecting Talent to Opportunity
         </p>
-      </div>
+      </header>
 
-      <div className="about-container">
-        {/* Left Side: Image */}
-        <div className="about-image-section">
-          <img
-            src={realScenarioImage}
-            alt="Real Job Scenario in Nepal"
-            className="about-image"
-          />
-          <div className="image-overlay"></div>
-        </div>
-
-        {/* Right Side: Text */}
+      {/* Main content */}
+      <div className="about-container no-image">
         <div className="about-text-section">
           <div className="about-intro">
             <p className="about-text">
@@ -42,61 +27,54 @@ function Aboutus() {
           </div>
 
           <div className="about-features">
-            <div className="feature-card">
-              <div className="feature-icon">
-                <FaRocket />
-              </div>
-              <h3>Smart Matching</h3>
-              <p>
-                Our algorithm recommends tailored opportunities that align with
-                your interests and skills.
-              </p>
-            </div>
-
+            {/* Feature 1 */}
             <div className="feature-card">
               <div className="feature-icon">
                 <FaUserGraduate />
               </div>
               <h3>Student-Focused</h3>
               <p>
-                We design for students — intuitive profiles, academic-friendly
-                filters, and growth-oriented listings.
+                Intuitive profiles, academic-friendly filters, and
+                growth-oriented listings built just for students.
               </p>
             </div>
 
+            {/* Feature 2 */}
             <div className="feature-card">
               <div className="feature-icon">
                 <FaBuilding />
               </div>
               <h3>Employer Tools</h3>
               <p>
-                Employers get streamlined posting, applicant tracking, and
-                AI-powered sorting features.
+                Streamlined posting, applicant tracking, and efficient candidate
+                management for recruiters.
               </p>
             </div>
 
+            {/* Feature 3 (New) */}
             <div className="feature-card">
               <div className="feature-icon">
-                <FaLightbulb />
+                <FaHandsHelping />
               </div>
-              <h3>Adaptive Learning</h3>
+              <h3>Career Guidance</h3>
               <p>
-                Our system continuously evolves to suggest better matches as you
-                interact more.
+                Access curated resources, resume-building tips, and mentorship
+                support to help you grow in your professional journey.
               </p>
             </div>
           </div>
 
+          {/* CTA */}
           <div className="about-cta">
-            <p className="about-text">
+            <p className="about-text cta-text">
               Whether you're just beginning your journey or hiring your next
-              star — Hirelyst is your partner in progress.
+              star — <strong>Hirelyst</strong> is your partner in progress.
             </p>
             <button className="cta-button">Get Started with Hirelyst</button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
